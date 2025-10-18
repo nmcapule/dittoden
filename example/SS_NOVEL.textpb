@@ -1,0 +1,52 @@
+entity {
+    uuid: "123e4567-e89b-12d3-a456-426614174000"
+    code: "SS_SUNNY_LOST_FROM_LIGHT"
+    labels {
+        label: "Sunny"
+        type: LT_PRIMARY
+    }
+    labels {
+        label: "Lost from Light"
+        type: LT_ALTERNATIVE
+    }
+    type: "PERSON"
+    person {
+        birth_date {
+            seconds: 1700000000,
+            nanos: 0
+        }
+    }
+}
+entity {
+    uuid: "223e4567-e89b-12d3-a456-426614174001"
+    code: "SS_WEAVER_DEMON_OF_FATE"
+    labels {
+        label: "Weaver"
+        type: LT_PRIMARY
+    }
+    labels {
+        label: "Firstborn of the -unknown-"
+        type: LT_TITLE
+    }
+    type: "PERSON"
+    person {
+        birth_date {
+            seconds: 1710000000,
+            nanos: 0
+        }
+    }
+}
+relationship {
+    uuid: "323e4567-e89b-12d3-a456-426614174002"
+    type: "RT_P2P_UNSPECIFIED"
+
+    entity_a_uuid: "123e4567-e89b-12d3-a456-426614174000"
+    entity_z_uuid: "223e4567-e89b-12d3-a456-426614174001"
+
+    entity_a_role: "inheritor"
+
+    tags {
+        name: "source"
+        value: "SS_NOVEL"
+    }
+}

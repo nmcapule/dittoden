@@ -1,17 +1,16 @@
 syntax = "proto3";
 
-package dittoden.entity;
-
-option go_package = "github.com/nmcapule/dittoden/entity";
+package dittoden.schema;
 
 import 'google/protobuf/timestamp.proto';
 
 enum EntityType {
-    TYPE_UNSPECIFIED = 0;
-    TYPE_PERSON = 1;
-    TYPE_ORGANIZATION = 2;
-    TYPE_LOCATION = 3;
-    TYPE_EVENT = 4;
+    ET_UNSPECIFIED = 0;
+    ET_PERSON = 1;
+    ET_ORGANIZATION = 2;
+    ET_LOCATION = 3;
+    ET_EVENT = 4;
+    ET_ARTIFACT = 5;
 }
 
 // Represents a generic entity with various possible types and details.
@@ -19,17 +18,18 @@ message Entity {
     // Unique identifier for the entity.
     string uuid = 1;
 
-    // Semi-human readable code for the entity.
+    // Semi-human readable code for the entity. Unique within its entity type.
     string code = 2;
 
     // Human-readable labels associated with the entity.
     message Label {
-        string value = 1;
+        string label = 1;
 
         enum LabelType {
-            TYPE_UNSPECIFIED = 0;
-            TYPE_PRIMARY = 1;
-            TYPE_ALTERNATIVE = 2;
+            LT_UNSPECIFIED = 0;
+            LT_PRIMARY = 1;
+            LT_ALTERNATIVE = 2;
+            LT_TITLE = 3;
         }
         LabelType type = 2;
     }
@@ -38,8 +38,8 @@ message Entity {
     // Type of the entity.
     EntityType type = 4;
 
-    // Entity-type specific details.
-    oneof details {
+    // Entity-type specific properties.
+    oneof properties {
         message PersonDetails {
             string first_name = 1;
             string last_name = 2;

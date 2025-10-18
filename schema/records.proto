@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package dittoden.schema;
+
+import 'google/protobuf/timestamp.proto';
+
+// Aggregates all entities and relationships, meant as schema for data input from files.
+message Records {
+    repeated Entity entity = 1;
+    repeated Relationship relationship = 2;
+}
