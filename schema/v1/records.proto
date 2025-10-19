@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package schema.v1;
+
+import 'schema/v1/entity.proto';
+import 'schema/v1/relationship.proto';
+
+option go_package = "schema/v1";
+
+// Aggregates all entities and relationships, meant as schema for data input from files.
+message Records {
+  repeated Entity entity = 1;
+  repeated Relationship relationship = 2;
+}

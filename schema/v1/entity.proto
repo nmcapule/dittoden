@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package schema.v1;
+
+import 'google/protobuf/timestamp.proto';
+
+option go_package = "schema/v1";
+
+// Defines various types of entities.
+enum EntityType {
+  ENTITY_TYPE_UNSPECIFIED = 0;
+  ENTITY_TYPE_PERSON = 1;
+  ENTITY_TYPE_ORGANIZATION = 2;
+  ENTITY_TYPE_LOCATION = 3;
+  ENTITY_TYPE_EVENT = 4;
+  ENTITY_TYPE_ARTIFACT = 5;
+}
+
+// Represents a generic entity with various possible types and details.
+message Entity {
+  // Unique identifier for the entity. Ideally human-readable.
+  string code = 1;
+
+  // Human-readable labels associated with the entity.
+  message Label {
+    string label = 1;
+
+    enum LabelType {
+      LABEL_TYPE_UNSPECIFIED = 0;
+      LABEL_TYPE_PRIMARY = 1;
+      LABEL_TYPE_ALTERNATIVE = 2;
+      LABEL_TYPE_TITLE = 3;
+    }
+    LabelType type = 2;
+  }
+  repeated Label labels = 3;
+
+  // Type of the entity.
+  EntityType type = 4;
+
+  message PersonDetails {
+    string first_name = 1;
+    string last_name = 2;
+    google.protobuf.Timestamp birth_date = 3;
+  }
+  message OrganizationDetails {
+    string registration_number = 1;
+    google.protobuf.Timestamp created = 2;
+  }
+  message LocationDetails {
+    string latitude = 1;
+    string longitude = 2;
+  }
+  message EventDetails {
+    string event_date = 1;
+    string location = 2;
+  }
+  // Entity-type specific properties.
+  oneof properties {
+    PersonDetails person = 5;
+    OrganizationDetails organization = 6;
+    LocationDetails location = 7;
+    EventDetails event = 8;
+  }
+}

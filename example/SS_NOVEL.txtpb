@@ -1,15 +1,14 @@
 entity {
-    uuid: "123e4567-e89b-12d3-a456-426614174000"
     code: "SS_SUNNY_LOST_FROM_LIGHT"
     labels {
         label: "Sunny"
-        type: LT_PRIMARY
+        type: LABEL_TYPE_PRIMARY
     }
     labels {
         label: "Lost from Light"
-        type: LT_ALTERNATIVE
+        type: LABEL_TYPE_ALTERNATIVE
     }
-    type: "PERSON"
+    type: ENTITY_TYPE_PERSON
     person {
         birth_date {
             seconds: 1700000000,
@@ -18,17 +17,16 @@ entity {
     }
 }
 entity {
-    uuid: "223e4567-e89b-12d3-a456-426614174001"
     code: "SS_WEAVER_DEMON_OF_FATE"
     labels {
         label: "Weaver"
-        type: LT_PRIMARY
+        type: LABEL_TYPE_PRIMARY
     }
     labels {
         label: "Firstborn of the -unknown-"
-        type: LT_TITLE
+        type: LABEL_TYPE_TITLE
     }
-    type: "PERSON"
+    type: ENTITY_TYPE_PERSON
     person {
         birth_date {
             seconds: 1710000000,
@@ -37,13 +35,16 @@ entity {
     }
 }
 relationship {
-    uuid: "323e4567-e89b-12d3-a456-426614174002"
-    type: "RT_P2P_UNSPECIFIED"
+    code: "323e4567-e89b-12d3-a456-426614174002"
+    type: RELATIONSHIP_TYPE_UNSPECIFIED
 
-    entity_a_uuid: "123e4567-e89b-12d3-a456-426614174000"
-    entity_z_uuid: "223e4567-e89b-12d3-a456-426614174001"
-
-    entity_a_role: "inheritor"
+    a {
+        id: "SS_SUNNY_LOST_FROM_LIGHT"
+        role: "inheritor"
+    }
+    z {
+        id: "SS_WEAVER_DEMON_OF_FATE"
+    }
 
     tags {
         name: "source"
