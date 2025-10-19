@@ -13,33 +13,40 @@ import (
 )
 
 var (
-	path = flag.String("path", "", "Path to the folder containing .txtpb files to validate.")
+	dir = flag.String("dir", "", "Path to the folder containing .txtpb files to validate.")
 )
 
 func main() {
 	flag.Parse()
 
-	filepath.Walk(*path, func(path string, info fs.FileInfo, err error) error {
+	records := &schema.Records{}
+	err := filepath.Walk(*dir, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
 		log.Printf("Visiting: %s", path)
 		if !info.IsDir() && filepath.Ext(info.Name()) == ".txtpb" {
-			log.Printf("Found file: %s", info.Name())
 			data, err := os.ReadFile(path)
 			if err != nil {
 				log.Printf("Error reading file %s: %v", path, err)
 				return err
 			}
 
-			entity := &schema.Records{}
-			if err := prototext.Unmarshal(data, entity); err != nil {
+			filerecords := &schema.Records{}
+			if err := prototext.Unmarshal(data, filerecords); err != nil {
 				log.Printf("Error unmarshalling .txtpb file %s: %v", path, err)
 				return err
 			}
+			records.Entity = append(records.Entity, filerecords.Entity...)
+			records.Relationship = append(records.Relationship, filerecords.Relationship...)
 
-			log.Printf("Successfully read: %+v", prototext.Format(entity))
+			log.Printf("(%s) Entities: %d, Relationships: %d", path, len(filerecords.Entity), len(filerecords.Relationship))
 		}
 		return nil
 	})
+	if err != nil {
+		log.Fatalf("Error walking the path %s: %v", *dir, err)
+	}
+
+	log.Printf("Total Entities: %d, Total Relationships: %d", len(records.Entity), len(records.Relationship))
 }
