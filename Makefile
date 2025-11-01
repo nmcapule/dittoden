@@ -7,7 +7,7 @@ generate-proto-libs:
 .PHONY: validate-examples
 validate-examples:
 	find ./examples -type f -name "*.txtpb" | xargs go run github.com/protocolbuffers/txtpbfmt/cmd/txtpbfmt@latest
-	go run validate.go --dir=./examples
+	go run ./cmd/validate --dir=./examples
 
 # Validates everything. I'll probably use this as a pre-commit hook.
 .PHONY: validate
