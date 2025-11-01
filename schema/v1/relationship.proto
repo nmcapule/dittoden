@@ -44,7 +44,7 @@ message Relationship {
   // The two entities involved in the relationship. If the relationship is bidirectional, use
   // entity with lower UUID as entity_a.
   message Participant {
-    string id = 1;
+    string code = 1;
     string role = 2;
   }
   Participant a = 3;

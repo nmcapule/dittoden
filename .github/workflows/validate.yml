@@ -2,7 +2,7 @@ name: Validate
 
 on:
     push:
-        branches: ["**"]
+        branches: ["main", "staging"]
 
 jobs:
     validate:
