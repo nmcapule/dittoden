@@ -8,29 +8,24 @@ Dittoden is a prototyping system for creating crowd-sourced and curated domain m
 
 ## Prerequisites
 
-- Go 1.25.3 or later
-- Buf CLI tool (`buf`)
+- Install [Homebrew](https://brew.sh)
+- Install Go and Buf using Homebrew
 
-### Installing Prerequisites
-
-1. **Go**: Download and install from [golang.org](https://golang.org/downloads/)
-
-2. **Buf CLI**: Install using one of the following methods:
    ```bash
-   # Using Homebrew (macOS/Linux)
-   brew install bufbuild/buf/buf
-   
-   # Using Go
-   go install github.com/bufbuild/buf/cmd/buf@latest
-   
-   # Download binary directly
-   curl -sSL "https://github.com/bufbuild/buf/releases/latest/download/buf-$(uname -s)-$(uname -m)" -o "${HOME}/.local/bin/buf"
-   chmod +x "${HOME}/.local/bin/buf"
+   brew install go bufbuild/buf/buf
+   ```
+
+- (Optional) Install Podman and nektos/act for local Github Actions
+
+   ```bash
+   # If you are in WSL, execute this first:
+   # $ wsl.exe -u root -e mount --make-rshared /
+   $ brew install podman act
    ```
 
 ## Project Structure
 
-```
+```text
 dittoden/
 ├── README.md                  # Project overview and roadmap
 ├── DEVELOPMENT.md             # This file
@@ -62,6 +57,7 @@ buf generate
 ```
 
 This will:
+
 - Generate Go code in `gen/go/github.com/dittoden/schema/v1/`
 - Update all language bindings as configured in `buf.gen.yaml`
 
@@ -163,7 +159,7 @@ done
 
 ### Commit Message Format
 
-```
+```text
 type(scope): brief description
 
 Longer description if needed.
@@ -180,6 +176,7 @@ Scopes: `schema`, `tools`, `gen`, `example`, `docs`
 ### Common Issues
 
 1. **Code Generation Fails**
+
    ```bash
    # Check buf installation
    buf --version
@@ -189,6 +186,7 @@ Scopes: `schema`, `tools`, `gen`, `example`, `docs`
    ```
 
 2. **Go Module Issues**
+
    ```bash
    # Clean and regenerate modules
    cd tools/validatetxtpb
@@ -212,6 +210,7 @@ Scopes: `schema`, `tools`, `gen`, `example`, `docs`
 ### VS Code
 
 Recommended extensions:
+
 - Protocol Buffer Language Support
 - Go extension
 - Buf extension (if available)
