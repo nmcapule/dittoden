@@ -39,11 +39,11 @@ relationship {
   type: RELATIONSHIP_TYPE_UNSPECIFIED
 
   a {
-    id: "SS_SUNNY_LOST_FROM_LIGHT"
+    code: "SS_SUNNY_LOST_FROM_LIGHT"
     role: "inheritor"
   }
   z {
-    id: "SS_WEAVER_DEMON_OF_FATE"
+    code: "SS_WEAVER_DEMON_OF_FATE"
   }
 
   tags {
