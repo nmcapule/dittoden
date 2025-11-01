@@ -3,6 +3,6 @@ entity {
   type: ENTITY_TYPE_LOCATION
   labels {
     label: "Philippines"
-    type: LABEL_TYPE_PRIMARY
+    type: LABEL_TYPE_PRIMARYs
   }
 }
