@@ -1,4 +1,4 @@
 version: v2
 plugins:
-  - remote: buf.build/protocolbuffers/go
+  - local: ["go", "run", "google.golang.org/protobuf/cmd/protoc-gen-go"]
     out: gen
