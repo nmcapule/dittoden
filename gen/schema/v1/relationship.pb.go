@@ -22,96 +22,75 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type RelationshipType int32
+type RelationshipType struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier for the relationship type.
+	Code string `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	// Description of the relationship type.
+	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	// If the relationship type is bidirectional.
+	IsBidirectional bool   `protobuf:"varint,3,opt,name=is_bidirectional,json=isBidirectional,proto3" json:"is_bidirectional,omitempty"`
+	Tags            []*Tag `protobuf:"bytes,4,rep,name=tags,proto3" json:"tags,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
 
-const (
-	RelationshipType_RELATIONSHIP_TYPE_UNSPECIFIED RelationshipType = 0
-	// Person-to-person relationships.
-	RelationshipType_RELATIONSHIP_TYPE_PARENT               RelationshipType = 2
-	RelationshipType_RELATIONSHIP_TYPE_SIBLINGS             RelationshipType = 3
-	RelationshipType_RELATIONSHIP_TYPE_SPOUSE               RelationshipType = 4
-	RelationshipType_RELATIONSHIP_TYPE_ACQUAINTANCE         RelationshipType = 12
-	RelationshipType_RELATIONSHIP_TYPE_CLOSE_FRIEND         RelationshipType = 13
-	RelationshipType_RELATIONSHIP_TYPE_ROMANTIC_PARTNER     RelationshipType = 14
-	RelationshipType_RELATIONSHIP_TYPE_PEER                 RelationshipType = 22
-	RelationshipType_RELATIONSHIP_TYPE_SUPERIOR_SUBORDINATE RelationshipType = 23
-	RelationshipType_RELATIONSHIP_TYPE_BUSINESS_PARTNER     RelationshipType = 24
-	// Organization-to-person relationships.
-	RelationshipType_RELATIONSHIP_TYPE_MEMBER    RelationshipType = 102
-	RelationshipType_RELATIONSHIP_TYPE_EXECUTIVE RelationshipType = 103
-	// Organization-to-organization relationships.
-	RelationshipType_RELATIONSHIP_TYPE_PARENT_SUBSIDIARY RelationshipType = 202
-	RelationshipType_RELATIONSHIP_TYPE_PARTNERSHIP       RelationshipType = 203
-	// Artifact-to-entity relationships.
-	RelationshipType_RELATIONSHIP_TYPE_CREATED_BY RelationshipType = 302
-	RelationshipType_RELATIONSHIP_TYPE_OWNED_BY   RelationshipType = 303
-)
+func (x *RelationshipType) Reset() {
+	*x = RelationshipType{}
+	mi := &file_schema_v1_relationship_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
 
-// Enum value maps for RelationshipType.
-var (
-	RelationshipType_name = map[int32]string{
-		0:   "RELATIONSHIP_TYPE_UNSPECIFIED",
-		2:   "RELATIONSHIP_TYPE_PARENT",
-		3:   "RELATIONSHIP_TYPE_SIBLINGS",
-		4:   "RELATIONSHIP_TYPE_SPOUSE",
-		12:  "RELATIONSHIP_TYPE_ACQUAINTANCE",
-		13:  "RELATIONSHIP_TYPE_CLOSE_FRIEND",
-		14:  "RELATIONSHIP_TYPE_ROMANTIC_PARTNER",
-		22:  "RELATIONSHIP_TYPE_PEER",
-		23:  "RELATIONSHIP_TYPE_SUPERIOR_SUBORDINATE",
-		24:  "RELATIONSHIP_TYPE_BUSINESS_PARTNER",
-		102: "RELATIONSHIP_TYPE_MEMBER",
-		103: "RELATIONSHIP_TYPE_EXECUTIVE",
-		202: "RELATIONSHIP_TYPE_PARENT_SUBSIDIARY",
-		203: "RELATIONSHIP_TYPE_PARTNERSHIP",
-		302: "RELATIONSHIP_TYPE_CREATED_BY",
-		303: "RELATIONSHIP_TYPE_OWNED_BY",
+func (x *RelationshipType) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RelationshipType) ProtoMessage() {}
+
+func (x *RelationshipType) ProtoReflect() protoreflect.Message {
+	mi := &file_schema_v1_relationship_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
 	}
-	RelationshipType_value = map[string]int32{
-		"RELATIONSHIP_TYPE_UNSPECIFIED":          0,
-		"RELATIONSHIP_TYPE_PARENT":               2,
-		"RELATIONSHIP_TYPE_SIBLINGS":             3,
-		"RELATIONSHIP_TYPE_SPOUSE":               4,
-		"RELATIONSHIP_TYPE_ACQUAINTANCE":         12,
-		"RELATIONSHIP_TYPE_CLOSE_FRIEND":         13,
-		"RELATIONSHIP_TYPE_ROMANTIC_PARTNER":     14,
-		"RELATIONSHIP_TYPE_PEER":                 22,
-		"RELATIONSHIP_TYPE_SUPERIOR_SUBORDINATE": 23,
-		"RELATIONSHIP_TYPE_BUSINESS_PARTNER":     24,
-		"RELATIONSHIP_TYPE_MEMBER":               102,
-		"RELATIONSHIP_TYPE_EXECUTIVE":            103,
-		"RELATIONSHIP_TYPE_PARENT_SUBSIDIARY":    202,
-		"RELATIONSHIP_TYPE_PARTNERSHIP":          203,
-		"RELATIONSHIP_TYPE_CREATED_BY":           302,
-		"RELATIONSHIP_TYPE_OWNED_BY":             303,
-	}
-)
-
-func (x RelationshipType) Enum() *RelationshipType {
-	p := new(RelationshipType)
-	*p = x
-	return p
+	return mi.MessageOf(x)
 }
 
-func (x RelationshipType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (RelationshipType) Descriptor() protoreflect.EnumDescriptor {
-	return file_schema_v1_relationship_proto_enumTypes[0].Descriptor()
-}
-
-func (RelationshipType) Type() protoreflect.EnumType {
-	return &file_schema_v1_relationship_proto_enumTypes[0]
-}
-
-func (x RelationshipType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use RelationshipType.Descriptor instead.
-func (RelationshipType) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use RelationshipType.ProtoReflect.Descriptor instead.
+func (*RelationshipType) Descriptor() ([]byte, []int) {
 	return file_schema_v1_relationship_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *RelationshipType) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *RelationshipType) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *RelationshipType) GetIsBidirectional() bool {
+	if x != nil {
+		return x.IsBidirectional
+	}
+	return false
+}
+
+func (x *RelationshipType) GetTags() []*Tag {
+	if x != nil {
+		return x.Tags
+	}
+	return nil
 }
 
 // Represents a relationship between two entities.
@@ -119,24 +98,23 @@ type Relationship struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Unique identifier for the relationship.
 	Code string `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
-	// Type of the relationship.
-	Type RelationshipType          `protobuf:"varint,2,opt,name=type,proto3,enum=schema.v1.RelationshipType" json:"type,omitempty"`
-	A    *Relationship_Participant `protobuf:"bytes,3,opt,name=a,proto3" json:"a,omitempty"`
-	Z    *Relationship_Participant `protobuf:"bytes,4,opt,name=z,proto3" json:"z,omitempty"`
-	// If the relationship is bidirectional.
-	IsBidirectional bool `protobuf:"varint,5,opt,name=is_bidirectional,json=isBidirectional,proto3" json:"is_bidirectional,omitempty"`
+	// Code for the relationship type.
+	TypeRef string                    `protobuf:"bytes,2,opt,name=type_ref,json=typeRef,proto3" json:"type_ref,omitempty"`
+	A       *Relationship_Participant `protobuf:"bytes,3,opt,name=a,proto3" json:"a,omitempty"`
+	Z       *Relationship_Participant `protobuf:"bytes,4,opt,name=z,proto3" json:"z,omitempty"`
 	// Timestamp when the relationship started.
-	Started *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=started,proto3" json:"started,omitempty"`
+	Started *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=started,proto3" json:"started,omitempty"`
 	// Timestamp when the relationship ended.
-	Ended         *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=ended,proto3" json:"ended,omitempty"`
-	Tags          []*Relationship_Tag    `protobuf:"bytes,8,rep,name=tags,proto3" json:"tags,omitempty"`
+	Ended *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=ended,proto3" json:"ended,omitempty"`
+	// Additional tags or metadata associated with the relationship.
+	Tags          []*Tag `protobuf:"bytes,7,rep,name=tags,proto3" json:"tags,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Relationship) Reset() {
 	*x = Relationship{}
-	mi := &file_schema_v1_relationship_proto_msgTypes[0]
+	mi := &file_schema_v1_relationship_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -148,7 +126,7 @@ func (x *Relationship) String() string {
 func (*Relationship) ProtoMessage() {}
 
 func (x *Relationship) ProtoReflect() protoreflect.Message {
-	mi := &file_schema_v1_relationship_proto_msgTypes[0]
+	mi := &file_schema_v1_relationship_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -161,7 +139,7 @@ func (x *Relationship) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Relationship.ProtoReflect.Descriptor instead.
 func (*Relationship) Descriptor() ([]byte, []int) {
-	return file_schema_v1_relationship_proto_rawDescGZIP(), []int{0}
+	return file_schema_v1_relationship_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *Relationship) GetCode() string {
@@ -171,11 +149,11 @@ func (x *Relationship) GetCode() string {
 	return ""
 }
 
-func (x *Relationship) GetType() RelationshipType {
+func (x *Relationship) GetTypeRef() string {
 	if x != nil {
-		return x.Type
+		return x.TypeRef
 	}
-	return RelationshipType_RELATIONSHIP_TYPE_UNSPECIFIED
+	return ""
 }
 
 func (x *Relationship) GetA() *Relationship_Participant {
@@ -192,13 +170,6 @@ func (x *Relationship) GetZ() *Relationship_Participant {
 	return nil
 }
 
-func (x *Relationship) GetIsBidirectional() bool {
-	if x != nil {
-		return x.IsBidirectional
-	}
-	return false
-}
-
 func (x *Relationship) GetStarted() *timestamppb.Timestamp {
 	if x != nil {
 		return x.Started
@@ -213,7 +184,7 @@ func (x *Relationship) GetEnded() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *Relationship) GetTags() []*Relationship_Tag {
+func (x *Relationship) GetTags() []*Tag {
 	if x != nil {
 		return x.Tags
 	}
@@ -232,7 +203,7 @@ type Relationship_Participant struct {
 
 func (x *Relationship_Participant) Reset() {
 	*x = Relationship_Participant{}
-	mi := &file_schema_v1_relationship_proto_msgTypes[1]
+	mi := &file_schema_v1_relationship_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -244,7 +215,7 @@ func (x *Relationship_Participant) String() string {
 func (*Relationship_Participant) ProtoMessage() {}
 
 func (x *Relationship_Participant) ProtoReflect() protoreflect.Message {
-	mi := &file_schema_v1_relationship_proto_msgTypes[1]
+	mi := &file_schema_v1_relationship_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -257,7 +228,7 @@ func (x *Relationship_Participant) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Relationship_Participant.ProtoReflect.Descriptor instead.
 func (*Relationship_Participant) Descriptor() ([]byte, []int) {
-	return file_schema_v1_relationship_proto_rawDescGZIP(), []int{0, 0}
+	return file_schema_v1_relationship_proto_rawDescGZIP(), []int{1, 0}
 }
 
 func (x *Relationship_Participant) GetCode() string {
@@ -274,96 +245,27 @@ func (x *Relationship_Participant) GetRole() string {
 	return ""
 }
 
-// Additional tags or metadata associated with the relationship.
-type Relationship_Tag struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Value         string                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *Relationship_Tag) Reset() {
-	*x = Relationship_Tag{}
-	mi := &file_schema_v1_relationship_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *Relationship_Tag) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Relationship_Tag) ProtoMessage() {}
-
-func (x *Relationship_Tag) ProtoReflect() protoreflect.Message {
-	mi := &file_schema_v1_relationship_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Relationship_Tag.ProtoReflect.Descriptor instead.
-func (*Relationship_Tag) Descriptor() ([]byte, []int) {
-	return file_schema_v1_relationship_proto_rawDescGZIP(), []int{0, 1}
-}
-
-func (x *Relationship_Tag) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *Relationship_Tag) GetValue() string {
-	if x != nil {
-		return x.Value
-	}
-	return ""
-}
-
 var File_schema_v1_relationship_proto protoreflect.FileDescriptor
 
 const file_schema_v1_relationship_proto_rawDesc = "" +
 	"\n" +
-	"\x1cschema/v1/relationship.proto\x12\tschema.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xe5\x03\n" +
+	"\x1cschema/v1/relationship.proto\x12\tschema.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x13schema/v1/tag.proto\"\x97\x01\n" +
+	"\x10RelationshipType\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\x12 \n" +
+	"\vdescription\x18\x02 \x01(\tR\vdescription\x12)\n" +
+	"\x10is_bidirectional\x18\x03 \x01(\bR\x0fisBidirectional\x12\"\n" +
+	"\x04tags\x18\x04 \x03(\v2\x0e.schema.v1.TagR\x04tags\"\xe6\x02\n" +
 	"\fRelationship\x12\x12\n" +
-	"\x04code\x18\x01 \x01(\tR\x04code\x12/\n" +
-	"\x04type\x18\x02 \x01(\x0e2\x1b.schema.v1.RelationshipTypeR\x04type\x121\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\x12\x19\n" +
+	"\btype_ref\x18\x02 \x01(\tR\atypeRef\x121\n" +
 	"\x01a\x18\x03 \x01(\v2#.schema.v1.Relationship.ParticipantR\x01a\x121\n" +
-	"\x01z\x18\x04 \x01(\v2#.schema.v1.Relationship.ParticipantR\x01z\x12)\n" +
-	"\x10is_bidirectional\x18\x05 \x01(\bR\x0fisBidirectional\x124\n" +
-	"\astarted\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\astarted\x120\n" +
-	"\x05ended\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\x05ended\x12/\n" +
-	"\x04tags\x18\b \x03(\v2\x1b.schema.v1.Relationship.TagR\x04tags\x1a5\n" +
+	"\x01z\x18\x04 \x01(\v2#.schema.v1.Relationship.ParticipantR\x01z\x124\n" +
+	"\astarted\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\astarted\x120\n" +
+	"\x05ended\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\x05ended\x12\"\n" +
+	"\x04tags\x18\a \x03(\v2\x0e.schema.v1.TagR\x04tags\x1a5\n" +
 	"\vParticipant\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12\x12\n" +
-	"\x04role\x18\x02 \x01(\tR\x04role\x1a/\n" +
-	"\x03Tag\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value*\xc2\x04\n" +
-	"\x10RelationshipType\x12!\n" +
-	"\x1dRELATIONSHIP_TYPE_UNSPECIFIED\x10\x00\x12\x1c\n" +
-	"\x18RELATIONSHIP_TYPE_PARENT\x10\x02\x12\x1e\n" +
-	"\x1aRELATIONSHIP_TYPE_SIBLINGS\x10\x03\x12\x1c\n" +
-	"\x18RELATIONSHIP_TYPE_SPOUSE\x10\x04\x12\"\n" +
-	"\x1eRELATIONSHIP_TYPE_ACQUAINTANCE\x10\f\x12\"\n" +
-	"\x1eRELATIONSHIP_TYPE_CLOSE_FRIEND\x10\r\x12&\n" +
-	"\"RELATIONSHIP_TYPE_ROMANTIC_PARTNER\x10\x0e\x12\x1a\n" +
-	"\x16RELATIONSHIP_TYPE_PEER\x10\x16\x12*\n" +
-	"&RELATIONSHIP_TYPE_SUPERIOR_SUBORDINATE\x10\x17\x12&\n" +
-	"\"RELATIONSHIP_TYPE_BUSINESS_PARTNER\x10\x18\x12\x1c\n" +
-	"\x18RELATIONSHIP_TYPE_MEMBER\x10f\x12\x1f\n" +
-	"\x1bRELATIONSHIP_TYPE_EXECUTIVE\x10g\x12(\n" +
-	"#RELATIONSHIP_TYPE_PARENT_SUBSIDIARY\x10\xca\x01\x12\"\n" +
-	"\x1dRELATIONSHIP_TYPE_PARTNERSHIP\x10\xcb\x01\x12!\n" +
-	"\x1cRELATIONSHIP_TYPE_CREATED_BY\x10\xae\x02\x12\x1f\n" +
-	"\x1aRELATIONSHIP_TYPE_OWNED_BY\x10\xaf\x02B\vZ\tschema/v1b\x06proto3"
+	"\x04role\x18\x02 \x01(\tR\x04roleB\vZ\tschema/v1b\x06proto3"
 
 var (
 	file_schema_v1_relationship_proto_rawDescOnce sync.Once
@@ -377,22 +279,21 @@ func file_schema_v1_relationship_proto_rawDescGZIP() []byte {
 	return file_schema_v1_relationship_proto_rawDescData
 }
 
-var file_schema_v1_relationship_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_schema_v1_relationship_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_schema_v1_relationship_proto_goTypes = []any{
-	(RelationshipType)(0),            // 0: schema.v1.RelationshipType
+	(*RelationshipType)(nil),         // 0: schema.v1.RelationshipType
 	(*Relationship)(nil),             // 1: schema.v1.Relationship
 	(*Relationship_Participant)(nil), // 2: schema.v1.Relationship.Participant
-	(*Relationship_Tag)(nil),         // 3: schema.v1.Relationship.Tag
+	(*Tag)(nil),                      // 3: schema.v1.Tag
 	(*timestamppb.Timestamp)(nil),    // 4: google.protobuf.Timestamp
 }
 var file_schema_v1_relationship_proto_depIdxs = []int32{
-	0, // 0: schema.v1.Relationship.type:type_name -> schema.v1.RelationshipType
+	3, // 0: schema.v1.RelationshipType.tags:type_name -> schema.v1.Tag
 	2, // 1: schema.v1.Relationship.a:type_name -> schema.v1.Relationship.Participant
 	2, // 2: schema.v1.Relationship.z:type_name -> schema.v1.Relationship.Participant
 	4, // 3: schema.v1.Relationship.started:type_name -> google.protobuf.Timestamp
 	4, // 4: schema.v1.Relationship.ended:type_name -> google.protobuf.Timestamp
-	3, // 5: schema.v1.Relationship.tags:type_name -> schema.v1.Relationship.Tag
+	3, // 5: schema.v1.Relationship.tags:type_name -> schema.v1.Tag
 	6, // [6:6] is the sub-list for method output_type
 	6, // [6:6] is the sub-list for method input_type
 	6, // [6:6] is the sub-list for extension type_name
@@ -405,19 +306,19 @@ func file_schema_v1_relationship_proto_init() {
 	if File_schema_v1_relationship_proto != nil {
 		return
 	}
+	file_schema_v1_tag_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_schema_v1_relationship_proto_rawDesc), len(file_schema_v1_relationship_proto_rawDesc)),
-			NumEnums:      1,
+			NumEnums:      0,
 			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_schema_v1_relationship_proto_goTypes,
 		DependencyIndexes: file_schema_v1_relationship_proto_depIdxs,
-		EnumInfos:         file_schema_v1_relationship_proto_enumTypes,
 		MessageInfos:      file_schema_v1_relationship_proto_msgTypes,
 	}.Build()
 	File_schema_v1_relationship_proto = out.File

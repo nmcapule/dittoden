@@ -141,6 +141,8 @@ type Entity struct {
 	Labels []*Entity_Label `protobuf:"bytes,3,rep,name=labels,proto3" json:"labels,omitempty"`
 	// Type of the entity.
 	Type EntityType `protobuf:"varint,4,opt,name=type,proto3,enum=schema.v1.EntityType" json:"type,omitempty"`
+	// Additional tags or metadata associated with the entity.
+	Tags []*Tag `protobuf:"bytes,5,rep,name=tags,proto3" json:"tags,omitempty"`
 	// Entity-type specific properties.
 	//
 	// Types that are valid to be assigned to Properties:
@@ -205,6 +207,13 @@ func (x *Entity) GetType() EntityType {
 	return EntityType_ENTITY_TYPE_UNSPECIFIED
 }
 
+func (x *Entity) GetTags() []*Tag {
+	if x != nil {
+		return x.Tags
+	}
+	return nil
+}
+
 func (x *Entity) GetProperties() isEntity_Properties {
 	if x != nil {
 		return x.Properties
@@ -253,19 +262,19 @@ type isEntity_Properties interface {
 }
 
 type Entity_Person struct {
-	Person *Entity_PersonDetails `protobuf:"bytes,5,opt,name=person,proto3,oneof"`
+	Person *Entity_PersonDetails `protobuf:"bytes,11,opt,name=person,proto3,oneof"`
 }
 
 type Entity_Organization struct {
-	Organization *Entity_OrganizationDetails `protobuf:"bytes,6,opt,name=organization,proto3,oneof"`
+	Organization *Entity_OrganizationDetails `protobuf:"bytes,12,opt,name=organization,proto3,oneof"`
 }
 
 type Entity_Location struct {
-	Location *Entity_LocationDetails `protobuf:"bytes,7,opt,name=location,proto3,oneof"`
+	Location *Entity_LocationDetails `protobuf:"bytes,13,opt,name=location,proto3,oneof"`
 }
 
 type Entity_Event struct {
-	Event *Entity_EventDetails `protobuf:"bytes,8,opt,name=event,proto3,oneof"`
+	Event *Entity_EventDetails `protobuf:"bytes,14,opt,name=event,proto3,oneof"`
 }
 
 func (*Entity_Person) isEntity_Properties() {}
@@ -549,15 +558,16 @@ var File_schema_v1_entity_proto protoreflect.FileDescriptor
 
 const file_schema_v1_entity_proto_rawDesc = "" +
 	"\n" +
-	"\x16schema/v1/entity.proto\x12\tschema.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xf0\a\n" +
+	"\x16schema/v1/entity.proto\x12\tschema.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x13schema/v1/tag.proto\"\x9a\b\n" +
 	"\x06Entity\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12/\n" +
 	"\x06labels\x18\x03 \x03(\v2\x17.schema.v1.Entity.LabelR\x06labels\x12)\n" +
-	"\x04type\x18\x04 \x01(\x0e2\x15.schema.v1.EntityTypeR\x04type\x129\n" +
-	"\x06person\x18\x05 \x01(\v2\x1f.schema.v1.Entity.PersonDetailsH\x00R\x06person\x12K\n" +
-	"\forganization\x18\x06 \x01(\v2%.schema.v1.Entity.OrganizationDetailsH\x00R\forganization\x12?\n" +
-	"\blocation\x18\a \x01(\v2!.schema.v1.Entity.LocationDetailsH\x00R\blocation\x126\n" +
-	"\x05event\x18\b \x01(\v2\x1e.schema.v1.Entity.EventDetailsH\x00R\x05event\x1a\xc7\x01\n" +
+	"\x04type\x18\x04 \x01(\x0e2\x15.schema.v1.EntityTypeR\x04type\x12\"\n" +
+	"\x04tags\x18\x05 \x03(\v2\x0e.schema.v1.TagR\x04tags\x129\n" +
+	"\x06person\x18\v \x01(\v2\x1f.schema.v1.Entity.PersonDetailsH\x00R\x06person\x12K\n" +
+	"\forganization\x18\f \x01(\v2%.schema.v1.Entity.OrganizationDetailsH\x00R\forganization\x12?\n" +
+	"\blocation\x18\r \x01(\v2!.schema.v1.Entity.LocationDetailsH\x00R\blocation\x126\n" +
+	"\x05event\x18\x0e \x01(\v2\x1e.schema.v1.Entity.EventDetailsH\x00R\x05event\x1a\xc7\x01\n" +
 	"\x05Label\x12\x14\n" +
 	"\x05label\x18\x01 \x01(\tR\x05label\x125\n" +
 	"\x04type\x18\x02 \x01(\x0e2!.schema.v1.Entity.Label.LabelTypeR\x04type\"q\n" +
@@ -583,7 +593,7 @@ const file_schema_v1_entity_proto_rawDesc = "" +
 	"event_date\x18\x01 \x01(\tR\teventDate\x12\x1a\n" +
 	"\blocation\x18\x02 \x01(\tR\blocationB\f\n" +
 	"\n" +
-	"properties*\xaa\x01\n" +
+	"propertiesJ\x04\b\x06\x10\v*\xaa\x01\n" +
 	"\n" +
 	"EntityType\x12\x1b\n" +
 	"\x17ENTITY_TYPE_UNSPECIFIED\x10\x00\x12\x16\n" +
@@ -616,23 +626,25 @@ var file_schema_v1_entity_proto_goTypes = []any{
 	(*Entity_OrganizationDetails)(nil), // 5: schema.v1.Entity.OrganizationDetails
 	(*Entity_LocationDetails)(nil),     // 6: schema.v1.Entity.LocationDetails
 	(*Entity_EventDetails)(nil),        // 7: schema.v1.Entity.EventDetails
-	(*timestamppb.Timestamp)(nil),      // 8: google.protobuf.Timestamp
+	(*Tag)(nil),                        // 8: schema.v1.Tag
+	(*timestamppb.Timestamp)(nil),      // 9: google.protobuf.Timestamp
 }
 var file_schema_v1_entity_proto_depIdxs = []int32{
-	3, // 0: schema.v1.Entity.labels:type_name -> schema.v1.Entity.Label
-	0, // 1: schema.v1.Entity.type:type_name -> schema.v1.EntityType
-	4, // 2: schema.v1.Entity.person:type_name -> schema.v1.Entity.PersonDetails
-	5, // 3: schema.v1.Entity.organization:type_name -> schema.v1.Entity.OrganizationDetails
-	6, // 4: schema.v1.Entity.location:type_name -> schema.v1.Entity.LocationDetails
-	7, // 5: schema.v1.Entity.event:type_name -> schema.v1.Entity.EventDetails
-	1, // 6: schema.v1.Entity.Label.type:type_name -> schema.v1.Entity.Label.LabelType
-	8, // 7: schema.v1.Entity.PersonDetails.birth_date:type_name -> google.protobuf.Timestamp
-	8, // 8: schema.v1.Entity.OrganizationDetails.created:type_name -> google.protobuf.Timestamp
-	9, // [9:9] is the sub-list for method output_type
-	9, // [9:9] is the sub-list for method input_type
-	9, // [9:9] is the sub-list for extension type_name
-	9, // [9:9] is the sub-list for extension extendee
-	0, // [0:9] is the sub-list for field type_name
+	3,  // 0: schema.v1.Entity.labels:type_name -> schema.v1.Entity.Label
+	0,  // 1: schema.v1.Entity.type:type_name -> schema.v1.EntityType
+	8,  // 2: schema.v1.Entity.tags:type_name -> schema.v1.Tag
+	4,  // 3: schema.v1.Entity.person:type_name -> schema.v1.Entity.PersonDetails
+	5,  // 4: schema.v1.Entity.organization:type_name -> schema.v1.Entity.OrganizationDetails
+	6,  // 5: schema.v1.Entity.location:type_name -> schema.v1.Entity.LocationDetails
+	7,  // 6: schema.v1.Entity.event:type_name -> schema.v1.Entity.EventDetails
+	1,  // 7: schema.v1.Entity.Label.type:type_name -> schema.v1.Entity.Label.LabelType
+	9,  // 8: schema.v1.Entity.PersonDetails.birth_date:type_name -> google.protobuf.Timestamp
+	9,  // 9: schema.v1.Entity.OrganizationDetails.created:type_name -> google.protobuf.Timestamp
+	10, // [10:10] is the sub-list for method output_type
+	10, // [10:10] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_schema_v1_entity_proto_init() }
@@ -640,6 +652,7 @@ func file_schema_v1_entity_proto_init() {
 	if File_schema_v1_entity_proto != nil {
 		return
 	}
+	file_schema_v1_tag_proto_init()
 	file_schema_v1_entity_proto_msgTypes[0].OneofWrappers = []any{
 		(*Entity_Person)(nil),
 		(*Entity_Organization)(nil),

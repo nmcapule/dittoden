@@ -34,9 +34,16 @@ entity {
     }
   }
 }
+relationship_type {
+  code: "RT_INHERITOR_OF_FATE"
+  tags {
+    name: "source"
+    value: "SS_NOVEL"
+  }
+}
 relationship {
   code: "323e4567-e89b-12d3-a456-426614174002"
-  type: RELATIONSHIP_TYPE_UNSPECIFIED
+  type_ref: "RT_INHERITOR_OF_FATE"
 
   a {
     code: "SS_SUNNY_LOST_FROM_LIGHT"

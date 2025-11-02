@@ -3,34 +3,21 @@ syntax = "proto3";
 package schema.v1;
 
 import 'google/protobuf/timestamp.proto';
+import 'schema/v1/tag.proto';
 
 option go_package = "schema/v1";
 
-enum RelationshipType {
-  RELATIONSHIP_TYPE_UNSPECIFIED = 0;
+message RelationshipType {
+  // Unique identifier for the relationship type.
+  string code = 1;
 
-  // Person-to-person relationships.
-  RELATIONSHIP_TYPE_PARENT = 2;
-  RELATIONSHIP_TYPE_SIBLINGS = 3;
-  RELATIONSHIP_TYPE_SPOUSE = 4;
-  RELATIONSHIP_TYPE_ACQUAINTANCE = 12;
-  RELATIONSHIP_TYPE_CLOSE_FRIEND = 13;
-  RELATIONSHIP_TYPE_ROMANTIC_PARTNER = 14;
-  RELATIONSHIP_TYPE_PEER = 22;
-  RELATIONSHIP_TYPE_SUPERIOR_SUBORDINATE = 23;
-  RELATIONSHIP_TYPE_BUSINESS_PARTNER = 24;
+  // Description of the relationship type.
+  string description = 2;
 
-  // Organization-to-person relationships.
-  RELATIONSHIP_TYPE_MEMBER = 102;
-  RELATIONSHIP_TYPE_EXECUTIVE = 103;
+  // If the relationship type is bidirectional.
+  bool is_bidirectional = 3;
 
-  // Organization-to-organization relationships.
-  RELATIONSHIP_TYPE_PARENT_SUBSIDIARY = 202;
-  RELATIONSHIP_TYPE_PARTNERSHIP = 203;
-
-  // Artifact-to-entity relationships.
-  RELATIONSHIP_TYPE_CREATED_BY = 302;
-  RELATIONSHIP_TYPE_OWNED_BY = 303;
+  repeated Tag tags = 4;
 }
 
 // Represents a relationship between two entities.
@@ -38,8 +25,8 @@ message Relationship {
   // Unique identifier for the relationship.
   string code = 1;
 
-  // Type of the relationship.
-  RelationshipType type = 2;
+  // Code for the relationship type.
+  string type_ref = 2;
 
   // The two entities involved in the relationship. If the relationship is bidirectional, use
   // entity with lower UUID as entity_a.
@@ -50,18 +37,11 @@ message Relationship {
   Participant a = 3;
   Participant z = 4;
 
-  // If the relationship is bidirectional.
-  bool is_bidirectional = 5;
-
   // Timestamp when the relationship started.
-  google.protobuf.Timestamp started = 6;
+  google.protobuf.Timestamp started = 5;
   // Timestamp when the relationship ended.
-  google.protobuf.Timestamp ended = 7;
+  google.protobuf.Timestamp ended = 6;
 
   // Additional tags or metadata associated with the relationship.
-  message Tag {
-    string name = 1;
-    string value = 2;
-  }
-  repeated Tag tags = 8;
+  repeated Tag tags = 7;
 }

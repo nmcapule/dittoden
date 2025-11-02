@@ -11,4 +11,5 @@ option go_package = "schema/v1";
 message Records {
   repeated Entity entity = 1;
   repeated Relationship relationship = 2;
+  repeated RelationshipType relationship_type = 3;
 }

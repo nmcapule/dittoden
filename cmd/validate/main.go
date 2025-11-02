@@ -21,9 +21,43 @@ var (
 )
 
 type Validator struct {
-	Entities      map[string]*schema.Entity
-	Relationships map[string]*schema.Relationship
-	Logger        *slog.Logger
+	Entities          map[string]*schema.Entity
+	Relationships     map[string]*schema.Relationship
+	RelationshipTypes map[string]*schema.RelationshipType
+	Logger            *slog.Logger
+}
+
+func (v *Validator) RegisterRecords(r *schema.Records) error {
+	var errs []error
+	for _, e := range r.Entity {
+		if err := v.RegisterEntity(e); err != nil {
+			errs = append(errs, err)
+		}
+	}
+	for _, rel := range r.Relationship {
+		if err := v.RegisterRelationship(rel); err != nil {
+			errs = append(errs, err)
+		}
+	}
+	for _, rt := range r.RelationshipType {
+		if err := v.RegisterRelationshipType(rt); err != nil {
+			errs = append(errs, err)
+		}
+	}
+	return errors.Join(errs...)
+}
+
+func (v *Validator) RegisterRelationshipType(rt *schema.RelationshipType) error {
+	// Check for duplicate relationship type codes.
+	if _, exists := v.RelationshipTypes[rt.GetCode()]; exists {
+		v.Logger.Error(
+			"Duplicate relationship type found", slog.String("code", rt.GetCode()),
+			slog.Any("relationship_type", rt), slog.Any("existing_relationship_type", v.RelationshipTypes[rt.GetCode()]))
+		return fmt.Errorf("duplicate relationship type found: %s", rt.GetCode())
+	}
+
+	v.RelationshipTypes[rt.GetCode()] = rt
+	return nil
 }
 
 func (v *Validator) RegisterEntity(e *schema.Entity) error {
@@ -60,6 +94,14 @@ func (v *Validator) Run() error {
 	for _, r := range v.Relationships {
 		a, z := r.GetA(), r.GetZ()
 
+		// Check if relationship type exists.
+		if _, exists := v.RelationshipTypes[r.GetTypeRef()]; !exists {
+			v.Logger.Error(
+				"Non-existent relationship type code",
+				slog.String("relationship", r.GetCode()), slog.String("type_code", r.GetTypeRef()))
+			errs = append(errs, fmt.Errorf("relationship %s has non-existent relationship type code: %s", r.GetCode(), r.GetTypeRef()))
+		}
+
 		// Check if source entity exists.
 		if _, exists := v.Entities[a.GetCode()]; !exists {
 			v.Logger.Error(
@@ -86,9 +128,10 @@ func main() {
 	logger := slog.New(tint.NewHandler(os.Stdout, &tint.Options{Level: slog.LevelDebug}))
 
 	validator := &Validator{
-		Entities:      make(map[string]*schema.Entity),
-		Relationships: make(map[string]*schema.Relationship),
-		Logger:        logger,
+		Entities:          make(map[string]*schema.Entity),
+		Relationships:     make(map[string]*schema.Relationship),
+		RelationshipTypes: make(map[string]*schema.RelationshipType),
+		Logger:            logger,
 	}
 	err := filepath.Walk(*dir, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
@@ -107,15 +150,9 @@ func main() {
 				validator.Logger.Error("Error unmarshalling .txtpb file", slog.String("file", path), slog.Any("error", err))
 				return err
 			}
-			for _, e := range filerecords.Entity {
-				if err := validator.RegisterEntity(e); err != nil {
-					return err
-				}
-			}
-			for _, r := range filerecords.Relationship {
-				if err := validator.RegisterRelationship(r); err != nil {
-					return err
-				}
+			if err := validator.RegisterRecords(filerecords); err != nil {
+				validator.Logger.Error("Error registering records from file", slog.String("file", path), slog.Any("error", err))
+				return err
 			}
 
 			validator.Logger.Info(
