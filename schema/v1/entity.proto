@@ -3,6 +3,7 @@ syntax = "proto3";
 package schema.v1;
 
 import 'google/protobuf/timestamp.proto';
+import 'schema/v1/tag.proto';
 
 option go_package = "schema/v1";
 
@@ -38,6 +39,11 @@ message Entity {
   // Type of the entity.
   EntityType type = 4;
 
+  // Additional tags or metadata associated with the entity.
+  repeated Tag tags = 5;
+
+  reserved 6 to 10;
+
   message PersonDetails {
     string first_name = 1;
     string last_name = 2;
@@ -57,9 +63,9 @@ message Entity {
   }
   // Entity-type specific properties.
   oneof properties {
-    PersonDetails person = 5;
-    OrganizationDetails organization = 6;
-    LocationDetails location = 7;
-    EventDetails event = 8;
+    PersonDetails person = 11;
+    OrganizationDetails organization = 12;
+    LocationDetails location = 13;
+    EventDetails event = 14;
   }
 }

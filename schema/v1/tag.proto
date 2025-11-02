@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package schema.v1;
+
+option go_package = "schema/v1";
+
+message Tag {
+  string name = 1;
+  string value = 2;
+}

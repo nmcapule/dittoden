@@ -23,11 +23,12 @@ const (
 
 // Aggregates all entities and relationships, meant as schema for data input from files.
 type Records struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Entity        []*Entity              `protobuf:"bytes,1,rep,name=entity,proto3" json:"entity,omitempty"`
-	Relationship  []*Relationship        `protobuf:"bytes,2,rep,name=relationship,proto3" json:"relationship,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Entity           []*Entity              `protobuf:"bytes,1,rep,name=entity,proto3" json:"entity,omitempty"`
+	Relationship     []*Relationship        `protobuf:"bytes,2,rep,name=relationship,proto3" json:"relationship,omitempty"`
+	RelationshipType []*RelationshipType    `protobuf:"bytes,3,rep,name=relationship_type,json=relationshipType,proto3" json:"relationship_type,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *Records) Reset() {
@@ -74,14 +75,22 @@ func (x *Records) GetRelationship() []*Relationship {
 	return nil
 }
 
+func (x *Records) GetRelationshipType() []*RelationshipType {
+	if x != nil {
+		return x.RelationshipType
+	}
+	return nil
+}
+
 var File_schema_v1_records_proto protoreflect.FileDescriptor
 
 const file_schema_v1_records_proto_rawDesc = "" +
 	"\n" +
-	"\x17schema/v1/records.proto\x12\tschema.v1\x1a\x16schema/v1/entity.proto\x1a\x1cschema/v1/relationship.proto\"q\n" +
+	"\x17schema/v1/records.proto\x12\tschema.v1\x1a\x16schema/v1/entity.proto\x1a\x1cschema/v1/relationship.proto\"\xbb\x01\n" +
 	"\aRecords\x12)\n" +
 	"\x06entity\x18\x01 \x03(\v2\x11.schema.v1.EntityR\x06entity\x12;\n" +
-	"\frelationship\x18\x02 \x03(\v2\x17.schema.v1.RelationshipR\frelationshipB\vZ\tschema/v1b\x06proto3"
+	"\frelationship\x18\x02 \x03(\v2\x17.schema.v1.RelationshipR\frelationship\x12H\n" +
+	"\x11relationship_type\x18\x03 \x03(\v2\x1b.schema.v1.RelationshipTypeR\x10relationshipTypeB\vZ\tschema/v1b\x06proto3"
 
 var (
 	file_schema_v1_records_proto_rawDescOnce sync.Once
@@ -97,18 +106,20 @@ func file_schema_v1_records_proto_rawDescGZIP() []byte {
 
 var file_schema_v1_records_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_schema_v1_records_proto_goTypes = []any{
-	(*Records)(nil),      // 0: schema.v1.Records
-	(*Entity)(nil),       // 1: schema.v1.Entity
-	(*Relationship)(nil), // 2: schema.v1.Relationship
+	(*Records)(nil),          // 0: schema.v1.Records
+	(*Entity)(nil),           // 1: schema.v1.Entity
+	(*Relationship)(nil),     // 2: schema.v1.Relationship
+	(*RelationshipType)(nil), // 3: schema.v1.RelationshipType
 }
 var file_schema_v1_records_proto_depIdxs = []int32{
 	1, // 0: schema.v1.Records.entity:type_name -> schema.v1.Entity
 	2, // 1: schema.v1.Records.relationship:type_name -> schema.v1.Relationship
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	3, // 2: schema.v1.Records.relationship_type:type_name -> schema.v1.RelationshipType
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_schema_v1_records_proto_init() }
