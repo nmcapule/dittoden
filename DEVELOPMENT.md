@@ -98,6 +98,16 @@ Run the search command:
 ./dittoden search --property role=protagonist
 ```
 
+Run the add-entity command:
+
+```bash
+# Interactive mode
+./dittoden add-entity
+
+# With flags
+./dittoden add-entity --code NEW_ENTITY --label "New Entity" --type PERSON --file examples/new.txtpb
+```
+
 ### 4. Working with Example Data
 
 The project includes example data in multiple formats:

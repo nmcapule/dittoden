@@ -8,7 +8,7 @@ Dittoden is a prototyping system for crowd-sourced domain modeling using Protoco
 
 ### Core Schema (`schema/v1/*.proto`)
 
-- **Entity-centric design**: Everything revolves around `Entity` with typed properties (`EntityType` enum: PERSON, ORGANIZATION, LOCATION, EVENT, ARTIFACT)
+- **Entity-centric design**: Everything revolves around `Entity` with typed properties (`EntityType` enum: BEING, ORGANIZATION, LOCATION, EVENT, ARTIFACT)
 - **Relationship modeling**: `Relationship` connects entities via `RelationshipType` definitions with bidirectional support
 - **Flexible labeling**: Entities use `Label` messages with types (PRIMARY, ALTERNATIVE, TITLE) rather than simple strings
 - **Tag-based metadata**: Both entities and relationships support arbitrary `Tag` key-value pairs for extensibility

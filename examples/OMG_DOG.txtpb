@@ -1,0 +1,16 @@
+entity: {
+  code: "BISCOFF_THE_DOG"
+  labels: {
+    label: "Biscoff"
+    type: LABEL_TYPE_PRIMARY
+  }
+  type: ENTITY_TYPE_BEING
+}
+entity: {
+  code: "NANA_THE_CAT"
+  labels: {
+    label: "Nanami"
+    type: LABEL_TYPE_PRIMARY
+  }
+  type: ENTITY_TYPE_BEING
+}

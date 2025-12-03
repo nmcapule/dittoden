@@ -86,18 +86,6 @@ func (r *Registry) SearchByProperty(key, valueQuery string) []*SearchResult {
 
 		// Check specific properties based on key
 		switch strings.ToLower(key) {
-		case "first_name":
-			if p := entity.GetPerson(); p != nil {
-				if strings.Contains(strings.ToLower(p.FirstName), valueQuery) {
-					results = append(results, &SearchResult{Entity: entity, Reason: "Matched first_name"})
-				}
-			}
-		case "last_name":
-			if p := entity.GetPerson(); p != nil {
-				if strings.Contains(strings.ToLower(p.LastName), valueQuery) {
-					results = append(results, &SearchResult{Entity: entity, Reason: "Matched last_name"})
-				}
-			}
 		case "registration_number":
 			if o := entity.GetOrganization(); o != nil {
 				if strings.Contains(strings.ToLower(o.RegistrationNumber), valueQuery) {
