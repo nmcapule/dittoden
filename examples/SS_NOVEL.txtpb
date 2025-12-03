@@ -1,3 +1,57 @@
+relationship_type {
+  code: "RT_INHERITOR_OF_FATE"
+  tags {
+    name: "source"
+    value: "SS_NOVEL"
+  }
+}
+relationship_type {
+  code: "RT_SHADOW_BOND"
+  tags {
+    name: "source"
+    value: "SS_NOVEL"
+  }
+}
+relationship_type {
+  code: "RT_COHORT_MEMBER"
+  is_bidirectional: true
+  tags {
+    name: "source"
+    value: "SS_NOVEL"
+  }
+}
+relationship_type {
+  code: "RT_LOCATED_AT"
+  tags {
+    name: "source"
+    value: "SS_NOVEL"
+  }
+}
+relationship_type {
+  code: "RT_PARTICIPATED_IN"
+  tags {
+    name: "source"
+    value: "SS_NOVEL"
+  }
+}
+relationship_type {
+  code: "RT_HAS_SHADOW"
+  tags {
+    name: "source"
+    value: "SS_NOVEL"
+  }
+}
+relationship_type {
+  code: "RT_FAMILY"
+  is_bidirectional: true
+  tags {
+    name: "source"
+    value: "SS_NOVEL"
+  }
+}
+
+# --- Entities: Beings ---
+
 entity {
   code: "SS_SUNNY_LOST_FROM_LIGHT"
   labels {
@@ -8,14 +62,145 @@ entity {
     label: "Lost from Light"
     type: LABEL_TYPE_ALTERNATIVE
   }
+  labels {
+    label: "Sunless"
+    type: LABEL_TYPE_ALTERNATIVE
+  }
+  labels {
+    label: "Mongrel"
+    type: LABEL_TYPE_ALTERNATIVE
+  }
+  tags { name: "first_name" value: "Sunless" }
+  tags { name: "aspect" value: "Shadow Slave" }
+  tags { name: "aspect_rank" value: "Divine" }
+  tags { name: "true_name" value: "Lost from Light" }
+  tags { name: "flaw" value: "Clear Conscience" }
+  tags { name: "shadow" value: "Saint" }
+  tags { name: "shadow" value: "Nightmare" }
+  tags { name: "shadow" value: "Imp" }
+  tags { name: "shadow" value: "Soul Serpent" }
+  tags { name: "memory" value: "Weaver's Mask" }
+  tags { name: "memory" value: "Midnight Shard" }
+  tags { name: "memory" value: "Mantle of the Underworld" }
+  tags { name: "memory" value: "Covetous Coffer" }
   type: ENTITY_TYPE_BEING
   being {
     birth_date {
       seconds: 1700000000
-      nanos: 0
     }
   }
 }
+
+entity {
+  code: "SS_NEPHIS_CHANGING_STAR"
+  labels {
+    label: "Nephis"
+    type: LABEL_TYPE_PRIMARY
+  }
+  labels {
+    label: "Changing Star"
+    type: LABEL_TYPE_ALTERNATIVE
+  }
+  tags { name: "first_name" value: "Nephis" }
+  tags { name: "last_name" value: "Immortal Flame" }
+  tags { name: "aspect" value: "Light Bringer" }
+  tags { name: "aspect_rank" value: "Divine" }
+  tags { name: "true_name" value: "Changing Star" }
+  tags { name: "flaw" value: "Pain" }
+  type: ENTITY_TYPE_BEING
+}
+
+entity {
+  code: "SS_CASSIE_SONG_OF_THE_FALLEN"
+  labels {
+    label: "Cassie"
+    type: LABEL_TYPE_PRIMARY
+  }
+  labels {
+    label: "Song of the Fallen"
+    type: LABEL_TYPE_ALTERNATIVE
+  }
+  tags { name: "first_name" value: "Cassia" }
+  tags { name: "aspect" value: "Sacred Seer" }
+  tags { name: "aspect_rank" value: "Sacred" }
+  tags { name: "true_name" value: "Song of the Fallen" }
+  tags { name: "flaw" value: "Blindness" }
+  type: ENTITY_TYPE_BEING
+}
+
+entity {
+  code: "SS_EFFIE_RAISED_BY_WOLVES"
+  labels {
+    label: "Effie"
+    type: LABEL_TYPE_PRIMARY
+  }
+  labels {
+    label: "Raised by Wolves"
+    type: LABEL_TYPE_ALTERNATIVE
+  }
+  tags { name: "first_name" value: "Athena" }
+  tags { name: "nickname" value: "Effie" }
+  tags { name: "aspect" value: "Huntress" }
+  tags { name: "aspect_rank" value: "Transcendent" }
+  tags { name: "true_name" value: "Raised by Wolves" }
+  tags { name: "flaw" value: "Insatiable Hunger" }
+  type: ENTITY_TYPE_BEING
+}
+
+entity {
+  code: "SS_KAI_NIGHTINGALE"
+  labels {
+    label: "Kai"
+    type: LABEL_TYPE_PRIMARY
+  }
+  labels {
+    label: "Nightingale"
+    type: LABEL_TYPE_ALTERNATIVE
+  }
+  tags { name: "first_name" value: "Kai" }
+  tags { name: "aspect" value: "Nightingale" }
+  tags { name: "aspect_rank" value: "Transcendent" }
+  tags { name: "true_name" value: "Nightingale" }
+  tags { name: "flaw" value: "Truth Perception" }
+  type: ENTITY_TYPE_BEING
+}
+
+entity {
+  code: "SS_JET_SOUL_REAPER"
+  labels {
+    label: "Jet"
+    type: LABEL_TYPE_PRIMARY
+  }
+  labels {
+    label: "Soul Reaper"
+    type: LABEL_TYPE_ALTERNATIVE
+  }
+  tags { name: "first_name" value: "Jet" }
+  tags { name: "aspect" value: "Soul Reaper" }
+  tags { name: "aspect_rank" value: "Supreme" }
+  tags { name: "true_name" value: "Soul Reaper" }
+  tags { name: "flaw" value: "Essence Depletion" }
+  type: ENTITY_TYPE_BEING
+}
+
+entity {
+  code: "SS_MORDRET_PRINCE_OF_NOTHING"
+  labels {
+    label: "Mordret"
+    type: LABEL_TYPE_PRIMARY
+  }
+  labels {
+    label: "Prince of Nothing"
+    type: LABEL_TYPE_ALTERNATIVE
+  }
+  tags { name: "first_name" value: "Mordret" }
+  tags { name: "aspect" value: "Mirror Beast" }
+  tags { name: "aspect_rank" value: "Divine" }
+  tags { name: "true_name" value: "Prince of Nothing" }
+  tags { name: "flaw" value: "No Body" }
+  type: ENTITY_TYPE_BEING
+}
+
 entity {
   code: "SS_WEAVER_DEMON_OF_FATE"
   labels {
@@ -23,38 +208,471 @@ entity {
     type: LABEL_TYPE_PRIMARY
   }
   labels {
-    label: "Firstborn of the -unknown-"
+    label: "Demon of Fate"
     type: LABEL_TYPE_TITLE
   }
+  tags { name: "name" value: "Weaver" }
+  tags { name: "title" value: "Demon of Fate" }
   type: ENTITY_TYPE_BEING
-  being {
-    birth_date {
-      seconds: 1710000000
-      nanos: 0
-    }
-  }
 }
-relationship_type {
-  code: "RT_INHERITOR_OF_FATE"
-  tags {
-    name: "source"
-    value: "SS_NOVEL"
+
+# --- Shadows ---
+
+entity {
+  code: "SS_SHADOW_SAINT"
+  labels { label: "Saint" type: LABEL_TYPE_PRIMARY }
+  labels { label: "Shadow Mimic" type: LABEL_TYPE_ALTERNATIVE }
+  type: ENTITY_TYPE_BEING
+}
+entity {
+  code: "SS_SHADOW_NIGHTMARE"
+  labels { label: "Nightmare" type: LABEL_TYPE_PRIMARY }
+  type: ENTITY_TYPE_BEING
+}
+entity {
+  code: "SS_SHADOW_IMP"
+  labels { label: "Imp" type: LABEL_TYPE_PRIMARY }
+  labels { label: "Fiend" type: LABEL_TYPE_ALTERNATIVE }
+  type: ENTITY_TYPE_BEING
+}
+entity {
+  code: "SS_SHADOW_SOUL_SERPENT"
+  labels { label: "Soul Serpent" type: LABEL_TYPE_PRIMARY }
+  type: ENTITY_TYPE_BEING
+}
+
+# --- Sovereigns ---
+
+entity {
+  code: "SS_ANVIL_OF_VALOR"
+  labels { label: "Anvil of Valor" type: LABEL_TYPE_PRIMARY }
+  labels { label: "King of Swords" type: LABEL_TYPE_TITLE }
+  type: ENTITY_TYPE_BEING
+}
+entity {
+  code: "SS_KI_SONG"
+  labels { label: "Ki Song" type: LABEL_TYPE_PRIMARY }
+  labels { label: "Queen of Worms" type: LABEL_TYPE_TITLE }
+  type: ENTITY_TYPE_BEING
+}
+entity {
+  code: "SS_ASTERION"
+  labels { label: "Asterion" type: LABEL_TYPE_PRIMARY }
+  type: ENTITY_TYPE_BEING
+}
+
+# --- Other Characters ---
+
+entity {
+  code: "SS_RAIN"
+  labels { label: "Rain" type: LABEL_TYPE_PRIMARY }
+  type: ENTITY_TYPE_BEING
+}
+entity {
+  code: "SS_MORGAN_WARBOW"
+  labels { label: "Morgan" type: LABEL_TYPE_PRIMARY }
+  labels { label: "Princess of War" type: LABEL_TYPE_TITLE }
+  type: ENTITY_TYPE_BEING
+}
+entity {
+  code: "SS_SEISHAN"
+  labels { label: "Seishan" type: LABEL_TYPE_PRIMARY }
+  type: ENTITY_TYPE_BEING
+}
+entity {
+  code: "SS_NOCTIS"
+  labels { label: "Noctis" type: LABEL_TYPE_PRIMARY }
+  labels { label: "The Sorcerer" type: LABEL_TYPE_TITLE }
+  type: ENTITY_TYPE_BEING
+}
+entity {
+  code: "SS_SOLVANE"
+  labels { label: "Solvane" type: LABEL_TYPE_PRIMARY }
+  type: ENTITY_TYPE_BEING
+}
+
+# --- Antarctica Irregulars ---
+
+entity {
+  code: "SS_LUSTER"
+  labels { label: "Luster" type: LABEL_TYPE_PRIMARY }
+  type: ENTITY_TYPE_BEING
+}
+entity {
+  code: "SS_AIKO"
+  labels { label: "Aiko" type: LABEL_TYPE_PRIMARY }
+  type: ENTITY_TYPE_BEING
+}
+entity {
+  code: "SS_SAMARA"
+  labels { label: "Samara" type: LABEL_TYPE_PRIMARY }
+  type: ENTITY_TYPE_BEING
+}
+entity {
+  code: "SS_KIM"
+  labels { label: "Kim" type: LABEL_TYPE_PRIMARY }
+  type: ENTITY_TYPE_BEING
+}
+entity {
+  code: "SS_QUENTIN"
+  labels { label: "Quentin" type: LABEL_TYPE_PRIMARY }
+  type: ENTITY_TYPE_BEING
+}
+entity {
+  code: "SS_BELLE"
+  labels { label: "Belle" type: LABEL_TYPE_PRIMARY }
+  type: ENTITY_TYPE_BEING
+}
+entity {
+  code: "SS_DORN"
+  labels { label: "Dorn" type: LABEL_TYPE_PRIMARY }
+  type: ENTITY_TYPE_BEING
+}
+
+# --- Entities: Locations ---
+
+entity {
+  code: "SS_LOC_FORGOTTEN_SHORE"
+  labels {
+    label: "Forgotten Shore"
+    type: LABEL_TYPE_PRIMARY
   }
+  type: ENTITY_TYPE_LOCATION
+}
+
+entity {
+  code: "SS_LOC_CHAINED_ISLES"
+  labels {
+    label: "Chained Isles"
+    type: LABEL_TYPE_PRIMARY
+  }
+  type: ENTITY_TYPE_LOCATION
+}
+
+entity {
+  code: "SS_LOC_TOMB_OF_ARIEL"
+  labels {
+    label: "Tomb of Ariel"
+    type: LABEL_TYPE_PRIMARY
+  }
+  labels {
+    label: "The Pyramid"
+    type: LABEL_TYPE_ALTERNATIVE
+  }
+  type: ENTITY_TYPE_LOCATION
+}
+
+entity {
+  code: "SS_LOC_ANTARCTICA"
+  labels {
+    label: "Antarctica"
+    type: LABEL_TYPE_PRIMARY
+  }
+  type: ENTITY_TYPE_LOCATION
+}
+
+# --- Entities: Events ---
+
+entity {
+  code: "SS_EVENT_FORGOTTEN_SHORE_EXPEDITION"
+  labels {
+    label: "Forgotten Shore Expedition"
+    type: LABEL_TYPE_PRIMARY
+  }
+  type: ENTITY_TYPE_EVENT
+}
+
+entity {
+  code: "SS_EVENT_SECOND_NIGHTMARE"
+  labels {
+    label: "Second Nightmare"
+    type: LABEL_TYPE_PRIMARY
+  }
+  type: ENTITY_TYPE_EVENT
+}
+
+entity {
+  code: "SS_EVENT_ANTARCTICA_CAMPAIGN"
+  labels {
+    label: "Antarctica Campaign"
+    type: LABEL_TYPE_PRIMARY
+  }
+  type: ENTITY_TYPE_EVENT
+}
+
+entity {
+  code: "SS_EVENT_THIRD_NIGHTMARE"
+  labels {
+    label: "Third Nightmare"
+    type: LABEL_TYPE_PRIMARY
+  }
+  type: ENTITY_TYPE_EVENT
+}
+
+# --- Relationships ---
+
+# Weaver -> Sunny
+relationship {
+  code: "rel_weaver_sunny"
+  type_ref: "RT_INHERITOR_OF_FATE"
+  a { code: "SS_SUNNY_LOST_FROM_LIGHT" role: "inheritor" }
+  z { code: "SS_WEAVER_DEMON_OF_FATE" }
+}
+
+# Shadow Bond: Sunny -> Nephis
+relationship {
+  code: "rel_bond_sunny_nephis"
+  type_ref: "RT_SHADOW_BOND"
+  a { code: "SS_SUNNY_LOST_FROM_LIGHT" role: "slave" }
+  z { code: "SS_NEPHIS_CHANGING_STAR" role: "master" }
+}
+
+# Cohort Members (Bidirectional)
+relationship {
+  code: "rel_cohort_sunny_nephis"
+  type_ref: "RT_COHORT_MEMBER"
+  a { code: "SS_NEPHIS_CHANGING_STAR" }
+  z { code: "SS_SUNNY_LOST_FROM_LIGHT" }
 }
 relationship {
-  code: "323e4567-e89b-12d3-a456-426614174002"
-  type_ref: "RT_INHERITOR_OF_FATE"
-
-  a {
-    code: "SS_SUNNY_LOST_FROM_LIGHT"
-    role: "inheritor"
-  }
-  z {
-    code: "SS_WEAVER_DEMON_OF_FATE"
-  }
-
-  tags {
-    name: "source"
-    value: "SS_NOVEL"
-  }
+  code: "rel_cohort_sunny_cassie"
+  type_ref: "RT_COHORT_MEMBER"
+  a { code: "SS_CASSIE_SONG_OF_THE_FALLEN" }
+  z { code: "SS_SUNNY_LOST_FROM_LIGHT" }
 }
+relationship {
+  code: "rel_cohort_nephis_cassie"
+  type_ref: "RT_COHORT_MEMBER"
+  a { code: "SS_CASSIE_SONG_OF_THE_FALLEN" }
+  z { code: "SS_NEPHIS_CHANGING_STAR" }
+}
+relationship {
+  code: "rel_cohort_sunny_effie"
+  type_ref: "RT_COHORT_MEMBER"
+  a { code: "SS_EFFIE_RAISED_BY_WOLVES" }
+  z { code: "SS_SUNNY_LOST_FROM_LIGHT" }
+}
+relationship {
+  code: "rel_cohort_sunny_kai"
+  type_ref: "RT_COHORT_MEMBER"
+  a { code: "SS_KAI_NIGHTINGALE" }
+  z { code: "SS_SUNNY_LOST_FROM_LIGHT" }
+}
+relationship {
+  code: "rel_cohort_sunny_jet"
+  type_ref: "RT_COHORT_MEMBER"
+  a { code: "SS_JET_SOUL_REAPER" }
+  z { code: "SS_SUNNY_LOST_FROM_LIGHT" }
+}
+
+# Locations
+relationship {
+  code: "rel_loc_fs_expedition"
+  type_ref: "RT_LOCATED_AT"
+  a { code: "SS_EVENT_FORGOTTEN_SHORE_EXPEDITION" }
+  z { code: "SS_LOC_FORGOTTEN_SHORE" }
+}
+relationship {
+  code: "rel_loc_second_nightmare"
+  type_ref: "RT_LOCATED_AT"
+  a { code: "SS_EVENT_SECOND_NIGHTMARE" }
+  z { code: "SS_LOC_CHAINED_ISLES" }
+}
+relationship {
+  code: "rel_loc_third_nightmare"
+  type_ref: "RT_LOCATED_AT"
+  a { code: "SS_EVENT_THIRD_NIGHTMARE" }
+  z { code: "SS_LOC_TOMB_OF_ARIEL" }
+}
+relationship {
+  code: "rel_loc_antarctica_campaign"
+  type_ref: "RT_LOCATED_AT"
+  a { code: "SS_EVENT_ANTARCTICA_CAMPAIGN" }
+  z { code: "SS_LOC_ANTARCTICA" }
+}
+
+# Participation
+relationship {
+  code: "rel_part_sunny_fs"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_SUNNY_LOST_FROM_LIGHT" }
+  z { code: "SS_EVENT_FORGOTTEN_SHORE_EXPEDITION" }
+}
+relationship {
+  code: "rel_part_nephis_fs"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_NEPHIS_CHANGING_STAR" }
+  z { code: "SS_EVENT_FORGOTTEN_SHORE_EXPEDITION" }
+}
+relationship {
+  code: "rel_part_cassie_fs"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_CASSIE_SONG_OF_THE_FALLEN" }
+  z { code: "SS_EVENT_FORGOTTEN_SHORE_EXPEDITION" }
+}
+
+relationship {
+  code: "rel_part_sunny_2nd"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_SUNNY_LOST_FROM_LIGHT" }
+  z { code: "SS_EVENT_SECOND_NIGHTMARE" }
+}
+relationship {
+  code: "rel_part_mordret_2nd"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_MORDRET_PRINCE_OF_NOTHING" }
+  z { code: "SS_EVENT_SECOND_NIGHTMARE" }
+}
+
+relationship {
+  code: "rel_part_sunny_antarctica"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_SUNNY_LOST_FROM_LIGHT" }
+  z { code: "SS_EVENT_ANTARCTICA_CAMPAIGN" }
+}
+relationship {
+  code: "rel_part_jet_antarctica"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_JET_SOUL_REAPER" }
+  z { code: "SS_EVENT_ANTARCTICA_CAMPAIGN" }
+}
+
+relationship {
+  code: "rel_part_sunny_3rd"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_SUNNY_LOST_FROM_LIGHT" }
+  z { code: "SS_EVENT_THIRD_NIGHTMARE" }
+}
+relationship {
+  code: "rel_part_nephis_3rd"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_NEPHIS_CHANGING_STAR" }
+  z { code: "SS_EVENT_THIRD_NIGHTMARE" }
+}
+
+# --- New Relationships ---
+
+# Shadows
+relationship {
+  code: "rel_sunny_saint"
+  type_ref: "RT_HAS_SHADOW"
+  a { code: "SS_SUNNY_LOST_FROM_LIGHT" }
+  z { code: "SS_SHADOW_SAINT" }
+}
+relationship {
+  code: "rel_sunny_nightmare"
+  type_ref: "RT_HAS_SHADOW"
+  a { code: "SS_SUNNY_LOST_FROM_LIGHT" }
+  z { code: "SS_SHADOW_NIGHTMARE" }
+}
+relationship {
+  code: "rel_sunny_imp"
+  type_ref: "RT_HAS_SHADOW"
+  a { code: "SS_SUNNY_LOST_FROM_LIGHT" }
+  z { code: "SS_SHADOW_IMP" }
+}
+relationship {
+  code: "rel_sunny_serpent"
+  type_ref: "RT_HAS_SHADOW"
+  a { code: "SS_SUNNY_LOST_FROM_LIGHT" }
+  z { code: "SS_SHADOW_SOUL_SERPENT" }
+}
+
+# Family
+relationship {
+  code: "rel_anvil_morgan"
+  type_ref: "RT_FAMILY"
+  a { code: "SS_ANVIL_OF_VALOR" }
+  z { code: "SS_MORGAN_WARBOW" }
+}
+relationship {
+  code: "rel_kisong_seishan"
+  type_ref: "RT_FAMILY"
+  a { code: "SS_KI_SONG" }
+  z { code: "SS_SEISHAN" }
+}
+relationship {
+  code: "rel_anvil_mordret"
+  type_ref: "RT_FAMILY"
+  a { code: "SS_ANVIL_OF_VALOR" }
+  z { code: "SS_MORDRET_PRINCE_OF_NOTHING" }
+}
+
+# Participation - Forgotten Shore
+relationship {
+  code: "rel_part_noctis_fs"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_NOCTIS" }
+  z { code: "SS_EVENT_FORGOTTEN_SHORE_EXPEDITION" }
+}
+
+# Participation - Second Nightmare
+relationship {
+  code: "rel_part_solvane_2nd"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_SOLVANE" }
+  z { code: "SS_EVENT_SECOND_NIGHTMARE" }
+}
+relationship {
+  code: "rel_part_noctis_2nd"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_NOCTIS" }
+  z { code: "SS_EVENT_SECOND_NIGHTMARE" }
+}
+
+# Participation - Antarctica
+relationship {
+  code: "rel_part_luster_ant"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_LUSTER" }
+  z { code: "SS_EVENT_ANTARCTICA_CAMPAIGN" }
+}
+relationship {
+  code: "rel_part_aiko_ant"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_AIKO" }
+  z { code: "SS_EVENT_ANTARCTICA_CAMPAIGN" }
+}
+relationship {
+  code: "rel_part_samara_ant"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_SAMARA" }
+  z { code: "SS_EVENT_ANTARCTICA_CAMPAIGN" }
+}
+relationship {
+  code: "rel_part_kim_ant"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_KIM" }
+  z { code: "SS_EVENT_ANTARCTICA_CAMPAIGN" }
+}
+relationship {
+  code: "rel_part_quentin_ant"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_QUENTIN" }
+  z { code: "SS_EVENT_ANTARCTICA_CAMPAIGN" }
+}
+relationship {
+  code: "rel_part_belle_ant"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_BELLE" }
+  z { code: "SS_EVENT_ANTARCTICA_CAMPAIGN" }
+}
+relationship {
+  code: "rel_part_dorn_ant"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_DORN" }
+  z { code: "SS_EVENT_ANTARCTICA_CAMPAIGN" }
+}
+relationship {
+  code: "rel_part_morgan_ant"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_MORGAN_WARBOW" }
+  z { code: "SS_EVENT_ANTARCTICA_CAMPAIGN" }
+}
+relationship {
+  code: "rel_part_seishan_ant"
+  type_ref: "RT_PARTICIPATED_IN"
+  a { code: "SS_SEISHAN" }
+  z { code: "SS_EVENT_ANTARCTICA_CAMPAIGN" }
+}
+
