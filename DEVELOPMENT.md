@@ -108,6 +108,12 @@ Run the add-entity command:
 ./dittoden add-entity --code NEW_ENTITY --label "New Entity" --type PERSON --file examples/new.txtpb
 ```
 
+Run the web server:
+
+```bash
+./dittoden serve --port 8080
+```
+
 ### 4. Working with Example Data
 
 The project includes example data in multiple formats:

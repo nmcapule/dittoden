@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Entity: {{.Entity.Code}}</title>
+	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<style>
+		body { font-family: sans-serif; margin: 20px; }
+		.container { display: flex; }
+		.details { flex: 1; padding-right: 20px; }
+		.visualization { flex: 1; border: 1px solid #ccc; height: 600px; }
+		table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+		th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+		th { background-color: #f2f2f2; }
+		h2 { border-bottom: 1px solid #eee; padding-bottom: 10px; }
+		.tag { background: #eee; padding: 2px 6px; border-radius: 4px; margin-right: 5px; }
+	</style>
+</head>
+<body>
+	<a href="/">Back to Home</a>
+	<h1>{{getPrimaryLabel .Entity}} <small>({{.Entity.Code}})</small></h1>
+	
+	<div class="container">
+		<div class="details">
+			<h2>Properties</h2>
+			<p><strong>Type:</strong> {{.Entity.Type}}</p>
+			
+			<h3>Labels</h3>
+			<ul>
+				{{range .Entity.Labels}}
+				<li>{{.Label}} ({{.Type}})</li>
+				{{end}}
+			</ul>
+
+			<h3>Tags</h3>
+			{{if .Entity.Tags}}
+			<ul>
+				{{range .Entity.Tags}}
+				<li><strong>{{.Name}}:</strong> {{.Value}}</li>
+				{{end}}
+			</ul>
+			{{else}}
+			<p>No tags.</p>
+			{{end}}
+
+			<h3>Relationships</h3>
+			{{if .Relations}}
+			<table>
+				<thead>
+					<tr>
+						<th>Relation</th>
+						<th>Type</th>
+						<th>Direction</th>
+						<th>Related Entity</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{range .Relations}}
+					<tr>
+						<td>{{.Relation.Code}}</td>
+						<td>{{.Relation.TypeRef}}</td>
+						<td>{{.Direction}}</td>
+						<td><a href="/entity/{{.OtherEntity.Code}}">{{getPrimaryLabel .OtherEntity}}</a></td>
+					</tr>
+					{{end}}
+				</tbody>
+			</table>
+			{{else}}
+			<p>No relationships.</p>
+			{{end}}
+		</div>
+		<div class="visualization" id="viz"></div>
+	</div>
+
+	<script>
+		const width = document.getElementById('viz').clientWidth;
+		const height = document.getElementById('viz').clientHeight;
+		const entityCode = "{{.Entity.Code}}";
+
+		d3.json("/api/graph/" + entityCode).then(data => {
+			const links = data.links.map(d => Object.create(d));
+			const nodes = data.nodes.map(d => Object.create(d));
+
+			const simulation = d3.forceSimulation(nodes)
+				.force("link", d3.forceLink(links).id(d => d.id).distance(150))
+				.force("charge", d3.forceManyBody().strength(-400))
+				.force("center", d3.forceCenter(width / 2, height / 2));
+
+			const svg = d3.select("#viz").append("svg")
+				.attr("width", width)
+				.attr("height", height)
+				.attr("viewBox", [0, 0, width, height])
+				.attr("style", "max-width: 100%; height: auto;");
+
+			// Define arrow markers
+			svg.append("defs").selectAll("marker")
+				.data(["end", "start"])
+				.join("marker")
+				.attr("id", d => `arrow-${d}`)
+				.attr("viewBox", "0 -5 10 10")
+				.attr("refX", 20) // Shifted back to not overlap with node
+				.attr("refY", 0)
+				.attr("markerWidth", 6)
+				.attr("markerHeight", 6)
+				.attr("orient", "auto")
+				.append("path")
+				.attr("fill", "#999")
+				.attr("d", d => d === "end" ? "M0,-5L10,0L0,5" : "M10,-5L0,0L10,5");
+
+			const linkGroup = svg.append("g")
+				.attr("stroke", "#999")
+				.attr("stroke-opacity", 0.6)
+				.selectAll("g")
+				.data(links)
+				.join("g");
+
+			const link = linkGroup.append("line")
+				.attr("stroke-width", 1.5)
+				.attr("marker-end", "url(#arrow-end)")
+				.attr("marker-start", d => d.bidirectional ? "url(#arrow-start)" : null);
+
+			const linkLabel = linkGroup.append("text")
+				.text(d => d.type)
+				.attr("font-size", "10px")
+				.attr("fill", "#555")
+				.attr("text-anchor", "middle")
+				.attr("dy", -5)
+				.attr("stroke", "none"); // Ensure text is not stroked by parent group
+
+			const node = svg.append("g")
+				.attr("stroke", "#fff")
+				.attr("stroke-width", 1.5)
+				.selectAll("circle")
+				.data(nodes)
+				.join("circle")
+				.attr("r", 10)
+				.attr("fill", d => d.id === entityCode ? "red" : (d.group === 2 ? "blue" : "lightblue"))
+				.call(drag(simulation));
+
+			node.append("title")
+				.text(d => d.label);
+			
+			node.on("click", (event, d) => {
+				window.location.href = "/entity/" + d.id;
+			});
+
+			const label = svg.append("g")
+				.selectAll("text")
+				.data(nodes)
+				.join("text")
+				.attr("dx", 12)
+				.attr("dy", ".35em")
+				.text(d => d.label)
+				.style("font-size", "12px")
+				.style("pointer-events", "none");
+
+			simulation.on("tick", () => {
+				link
+					.attr("x1", d => d.source.x)
+					.attr("y1", d => d.source.y)
+					.attr("x2", d => d.target.x)
+					.attr("y2", d => d.target.y);
+
+				linkLabel
+					.attr("x", d => (d.source.x + d.target.x) / 2)
+					.attr("y", d => (d.source.y + d.target.y) / 2);
+
+				node
+					.attr("cx", d => d.x)
+					.attr("cy", d => d.y);
+				
+				label
+					.attr("x", d => d.x)
+					.attr("y", d => d.y);
+			});
+
+			function drag(simulation) {
+				function dragstarted(event) {
+					if (!event.active) simulation.alphaTarget(0.3).restart();
+					event.subject.fx = event.subject.x;
+					event.subject.fy = event.subject.y;
+				}
+
+				function dragged(event) {
+					event.subject.fx = event.x;
+					event.subject.fy = event.y;
+				}
+
+				function dragended(event) {
+					if (!event.active) simulation.alphaTarget(0);
+					event.subject.fx = null;
+					event.subject.fy = null;
+				}
+
+				return d3.drag()
+					.on("start", dragstarted)
+					.on("drag", dragged)
+					.on("end", dragended);
+			}
+		});
+	</script>
+</body>
+</html>
