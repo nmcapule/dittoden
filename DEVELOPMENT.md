@@ -90,6 +90,14 @@ Run the validation command:
 ./dittoden validate --dir=../../examples
 ```
 
+Run the search command:
+
+```bash
+./dittoden search --name Sunny
+./dittoden search --related-to Sunny
+./dittoden search --property role=protagonist
+```
+
 ### 4. Working with Example Data
 
 The project includes example data in multiple formats:

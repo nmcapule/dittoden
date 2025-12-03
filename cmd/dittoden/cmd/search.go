@@ -94,6 +94,6 @@ func init() {
 	rootCmd.AddCommand(searchCmd)
 
 	searchCmd.Flags().StringVar(&searchName, "name", "", "Search by partial name matching")
-	searchCmd.Flags().StringVar(&searchRelatedTo, "related-to", "", "Search by relation to entity code")
+	searchCmd.Flags().StringVar(&searchRelatedTo, "related-to", "", "Search by relation to entity (code or name)")
 	searchCmd.Flags().StringVar(&searchProperty, "property", "", "Search by property (key=value)")
 }

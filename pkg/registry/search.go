@@ -32,26 +32,33 @@ func (r *Registry) SearchByName(query string) []*SearchResult {
 	return results
 }
 
-// SearchByRelation searches for entities related to the given entity code.
-func (r *Registry) SearchByRelation(entityCode string) []*SearchResult {
+// SearchByRelation searches for entities related to entities matching the query (code or label).
+func (r *Registry) SearchByRelation(query string) []*SearchResult {
 	var results []*SearchResult
-	
-	// Find all relationships where this entity is a participant
-	for _, rel := range r.Relationships {
-		var otherEntityCode string
-		if rel.A.Code == entityCode {
-			otherEntityCode = rel.Z.Code
-		} else if rel.Z.Code == entityCode {
-			otherEntityCode = rel.A.Code
-		} else {
-			continue
-		}
 
-		if otherEntity, exists := r.Entities[otherEntityCode]; exists {
-			results = append(results, &SearchResult{
-				Entity: otherEntity,
-				Reason: "Related via " + rel.Code + " (" + rel.TypeRef + ")",
-			})
+	// Find target entities that match the query
+	targets := r.SearchByName(query)
+
+	for _, target := range targets {
+		targetCode := target.Entity.Code
+
+		// Find all relationships where this entity is a participant
+		for _, rel := range r.Relationships {
+			var otherEntityCode string
+			if rel.A.Code == targetCode {
+				otherEntityCode = rel.Z.Code
+			} else if rel.Z.Code == targetCode {
+				otherEntityCode = rel.A.Code
+			} else {
+				continue
+			}
+
+			if otherEntity, exists := r.Entities[otherEntityCode]; exists {
+				results = append(results, &SearchResult{
+					Entity: otherEntity,
+					Reason: "Related to " + targetCode + " via " + rel.Code + " (" + rel.TypeRef + ")",
+				})
+			}
 		}
 	}
 	return results
