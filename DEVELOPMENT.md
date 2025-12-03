@@ -39,10 +39,12 @@ dittoden/
 ├── gen/                       # Generated code (auto-generated)
 │   └── schema/
 │       └── v1/                # Generated Go code
-├── example/                   # Example data files
+├── examples/                  # Example data files
 │   └── SS_NOVEL.txtpb         # Example protobuf text format
-└── tools/                     # Development tools
-    └── validatetxtpb/         # Tool for validating protobuf text files
+├── cmd/                       # CLI commands
+│   └── dittoden/              # Main CLI entry point
+└── pkg/                       # Shared packages
+    └── registry/              # Registry and validation logic
 ```
 
 ## Development Workflow
@@ -58,7 +60,7 @@ buf generate
 
 This will:
 
-- Generate Go code in `gen/go/github.com/dittoden/schema/v1/`
+- Generate Go code in `gen/schema/v1/`
 - Update all language bindings as configured in `buf.gen.yaml`
 
 ### 2. Schema Validation
@@ -75,32 +77,30 @@ buf breaking --against '.git#branch=main'
 
 ### 3. Building Tools
 
-Build the validation tool:
+Build the CLI tool:
 
 ```bash
-cd tools/validatetxtpb
-go build -o validatetxtpb main.go
+cd cmd/dittoden
+go build -o dittoden .
 ```
 
-Run the validation tool:
+Run the validation command:
 
 ```bash
-cd tools/validatetxtpb
-go run main.go
+./dittoden validate --dir=../../examples
 ```
 
 ### 4. Working with Example Data
 
 The project includes example data in multiple formats:
 
-- **Protocol Buffer Text Format**: `example/SS_NOVEL.txtpb`
+- **Protocol Buffer Text Format**: `examples/SS_NOVEL.txtpb`
 
 To validate example data against the schema:
 
 ```bash
 # Validate protobuf text format
-cd tools/validatetxtpb
-./validatetxtpb ../../example/SS_NOVEL.txtpb
+go run ./cmd/dittoden validate --dir=./examples
 ```
 
 ## Schema Development
@@ -128,8 +128,7 @@ cd tools/validatetxtpb
 ### Running Go Tests
 
 ```bash
-# Test the validation tool
-cd tools/validatetxtpb
+# Run all tests
 go test ./...
 
 # Run with coverage
@@ -140,10 +139,7 @@ go test -cover ./...
 
 ```bash
 # Validate all example data
-for file in example/*.txtpb; do
-    echo "Validating $file"
-    tools/validatetxtpb/validatetxtpb "$file"
-done
+go run ./cmd/dittoden validate --dir=./examples
 ```
 
 ## Contributing
@@ -169,7 +165,7 @@ Longer description if needed.
 ```
 
 Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
-Scopes: `schema`, `tools`, `gen`, `example`, `docs`
+Scopes: `schema`, `cmd`, `pkg`, `gen`, `examples`, `docs`
 
 ## Troubleshooting
 
@@ -189,7 +185,6 @@ Scopes: `schema`, `tools`, `gen`, `example`, `docs`
 
    ```bash
    # Clean and regenerate modules
-   cd tools/validatetxtpb
    rm go.sum
    go mod tidy
    ```

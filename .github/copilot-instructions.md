@@ -66,7 +66,7 @@ make validate
 
 ## Testing & Validation
 
-- **CLI validation**: `go run ./cmd/validate --dir=./examples` processes all example data
+- **CLI validation**: `go run ./cmd/dittoden validate --dir=./examples` processes all example data
 - **Format enforcement**: `txtpbfmt` tool ensures consistent text protobuf formatting
 - **CI pipeline**: GitHub Actions runs full validation on main/staging pushes
 - **Breaking change detection**: `buf breaking` checks against git history for schema compatibility
@@ -76,7 +76,7 @@ make validate
 - **Entity codes as primary keys**: Design entities with memorable, namespace-prefixed codes
 - **Bidirectional relationship handling**: Use entity with lexicographically smaller code as participant `a`
 - **Reserved field usage**: Schema uses `reserved 6 to 10;` in Entity for future extension points
-- **Empty package placeholder**: `cmd/dittoden/` and `pkg/{cli,export}/` exist but are empty (roadmap items)
+- **Empty package placeholder**: `pkg/{cli,export}/` exist but are empty (roadmap items)
 
 ## Common Pitfalls
 
