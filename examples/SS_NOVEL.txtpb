@@ -8,8 +8,8 @@ entity {
     label: "Lost from Light"
     type: LABEL_TYPE_ALTERNATIVE
   }
-  type: ENTITY_TYPE_PERSON
-  person {
+  type: ENTITY_TYPE_BEING
+  being {
     birth_date {
       seconds: 1700000000
       nanos: 0
@@ -26,8 +26,8 @@ entity {
     label: "Firstborn of the -unknown-"
     type: LABEL_TYPE_TITLE
   }
-  type: ENTITY_TYPE_PERSON
-  person {
+  type: ENTITY_TYPE_BEING
+  being {
     birth_date {
       seconds: 1710000000
       nanos: 0

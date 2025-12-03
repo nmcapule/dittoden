@@ -27,7 +27,7 @@ type EntityType int32
 
 const (
 	EntityType_ENTITY_TYPE_UNSPECIFIED  EntityType = 0
-	EntityType_ENTITY_TYPE_PERSON       EntityType = 1
+	EntityType_ENTITY_TYPE_BEING        EntityType = 1
 	EntityType_ENTITY_TYPE_ORGANIZATION EntityType = 2
 	EntityType_ENTITY_TYPE_LOCATION     EntityType = 3
 	EntityType_ENTITY_TYPE_EVENT        EntityType = 4
@@ -38,7 +38,7 @@ const (
 var (
 	EntityType_name = map[int32]string{
 		0: "ENTITY_TYPE_UNSPECIFIED",
-		1: "ENTITY_TYPE_PERSON",
+		1: "ENTITY_TYPE_BEING",
 		2: "ENTITY_TYPE_ORGANIZATION",
 		3: "ENTITY_TYPE_LOCATION",
 		4: "ENTITY_TYPE_EVENT",
@@ -46,7 +46,7 @@ var (
 	}
 	EntityType_value = map[string]int32{
 		"ENTITY_TYPE_UNSPECIFIED":  0,
-		"ENTITY_TYPE_PERSON":       1,
+		"ENTITY_TYPE_BEING":        1,
 		"ENTITY_TYPE_ORGANIZATION": 2,
 		"ENTITY_TYPE_LOCATION":     3,
 		"ENTITY_TYPE_EVENT":        4,
@@ -147,7 +147,7 @@ type Entity struct {
 	//
 	// Types that are valid to be assigned to Properties:
 	//
-	//	*Entity_Person
+	//	*Entity_Being
 	//	*Entity_Organization
 	//	*Entity_Location
 	//	*Entity_Event
@@ -221,10 +221,10 @@ func (x *Entity) GetProperties() isEntity_Properties {
 	return nil
 }
 
-func (x *Entity) GetPerson() *Entity_PersonDetails {
+func (x *Entity) GetBeing() *Entity_BeingDetails {
 	if x != nil {
-		if x, ok := x.Properties.(*Entity_Person); ok {
-			return x.Person
+		if x, ok := x.Properties.(*Entity_Being); ok {
+			return x.Being
 		}
 	}
 	return nil
@@ -261,8 +261,8 @@ type isEntity_Properties interface {
 	isEntity_Properties()
 }
 
-type Entity_Person struct {
-	Person *Entity_PersonDetails `protobuf:"bytes,11,opt,name=person,proto3,oneof"`
+type Entity_Being struct {
+	Being *Entity_BeingDetails `protobuf:"bytes,11,opt,name=being,proto3,oneof"`
 }
 
 type Entity_Organization struct {
@@ -277,7 +277,7 @@ type Entity_Event struct {
 	Event *Entity_EventDetails `protobuf:"bytes,14,opt,name=event,proto3,oneof"`
 }
 
-func (*Entity_Person) isEntity_Properties() {}
+func (*Entity_Being) isEntity_Properties() {}
 
 func (*Entity_Organization) isEntity_Properties() {}
 
@@ -338,29 +338,27 @@ func (x *Entity_Label) GetType() Entity_Label_LabelType {
 	return Entity_Label_LABEL_TYPE_UNSPECIFIED
 }
 
-type Entity_PersonDetails struct {
+type Entity_BeingDetails struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	FirstName     string                 `protobuf:"bytes,1,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
-	LastName      string                 `protobuf:"bytes,2,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
 	BirthDate     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=birth_date,json=birthDate,proto3" json:"birth_date,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Entity_PersonDetails) Reset() {
-	*x = Entity_PersonDetails{}
+func (x *Entity_BeingDetails) Reset() {
+	*x = Entity_BeingDetails{}
 	mi := &file_schema_v1_entity_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Entity_PersonDetails) String() string {
+func (x *Entity_BeingDetails) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Entity_PersonDetails) ProtoMessage() {}
+func (*Entity_BeingDetails) ProtoMessage() {}
 
-func (x *Entity_PersonDetails) ProtoReflect() protoreflect.Message {
+func (x *Entity_BeingDetails) ProtoReflect() protoreflect.Message {
 	mi := &file_schema_v1_entity_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -372,26 +370,12 @@ func (x *Entity_PersonDetails) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Entity_PersonDetails.ProtoReflect.Descriptor instead.
-func (*Entity_PersonDetails) Descriptor() ([]byte, []int) {
+// Deprecated: Use Entity_BeingDetails.ProtoReflect.Descriptor instead.
+func (*Entity_BeingDetails) Descriptor() ([]byte, []int) {
 	return file_schema_v1_entity_proto_rawDescGZIP(), []int{0, 1}
 }
 
-func (x *Entity_PersonDetails) GetFirstName() string {
-	if x != nil {
-		return x.FirstName
-	}
-	return ""
-}
-
-func (x *Entity_PersonDetails) GetLastName() string {
-	if x != nil {
-		return x.LastName
-	}
-	return ""
-}
-
-func (x *Entity_PersonDetails) GetBirthDate() *timestamppb.Timestamp {
+func (x *Entity_BeingDetails) GetBirthDate() *timestamppb.Timestamp {
 	if x != nil {
 		return x.BirthDate
 	}
@@ -558,13 +542,13 @@ var File_schema_v1_entity_proto protoreflect.FileDescriptor
 
 const file_schema_v1_entity_proto_rawDesc = "" +
 	"\n" +
-	"\x16schema/v1/entity.proto\x12\tschema.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x13schema/v1/tag.proto\"\x9a\b\n" +
+	"\x16schema/v1/entity.proto\x12\tschema.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x13schema/v1/tag.proto\"\xd9\a\n" +
 	"\x06Entity\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12/\n" +
 	"\x06labels\x18\x03 \x03(\v2\x17.schema.v1.Entity.LabelR\x06labels\x12)\n" +
 	"\x04type\x18\x04 \x01(\x0e2\x15.schema.v1.EntityTypeR\x04type\x12\"\n" +
-	"\x04tags\x18\x05 \x03(\v2\x0e.schema.v1.TagR\x04tags\x129\n" +
-	"\x06person\x18\v \x01(\v2\x1f.schema.v1.Entity.PersonDetailsH\x00R\x06person\x12K\n" +
+	"\x04tags\x18\x05 \x03(\v2\x0e.schema.v1.TagR\x04tags\x126\n" +
+	"\x05being\x18\v \x01(\v2\x1e.schema.v1.Entity.BeingDetailsH\x00R\x05being\x12K\n" +
 	"\forganization\x18\f \x01(\v2%.schema.v1.Entity.OrganizationDetailsH\x00R\forganization\x12?\n" +
 	"\blocation\x18\r \x01(\v2!.schema.v1.Entity.LocationDetailsH\x00R\blocation\x126\n" +
 	"\x05event\x18\x0e \x01(\v2\x1e.schema.v1.Entity.EventDetailsH\x00R\x05event\x1a\xc7\x01\n" +
@@ -575,11 +559,8 @@ const file_schema_v1_entity_proto_rawDesc = "" +
 	"\x16LABEL_TYPE_UNSPECIFIED\x10\x00\x12\x16\n" +
 	"\x12LABEL_TYPE_PRIMARY\x10\x01\x12\x1a\n" +
 	"\x16LABEL_TYPE_ALTERNATIVE\x10\x02\x12\x14\n" +
-	"\x10LABEL_TYPE_TITLE\x10\x03\x1a\x86\x01\n" +
-	"\rPersonDetails\x12\x1d\n" +
-	"\n" +
-	"first_name\x18\x01 \x01(\tR\tfirstName\x12\x1b\n" +
-	"\tlast_name\x18\x02 \x01(\tR\blastName\x129\n" +
+	"\x10LABEL_TYPE_TITLE\x10\x03\x1aI\n" +
+	"\fBeingDetails\x129\n" +
 	"\n" +
 	"birth_date\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tbirthDate\x1a|\n" +
 	"\x13OrganizationDetails\x12/\n" +
@@ -593,11 +574,11 @@ const file_schema_v1_entity_proto_rawDesc = "" +
 	"event_date\x18\x01 \x01(\tR\teventDate\x12\x1a\n" +
 	"\blocation\x18\x02 \x01(\tR\blocationB\f\n" +
 	"\n" +
-	"propertiesJ\x04\b\x06\x10\v*\xaa\x01\n" +
+	"propertiesJ\x04\b\x06\x10\v*\xa9\x01\n" +
 	"\n" +
 	"EntityType\x12\x1b\n" +
-	"\x17ENTITY_TYPE_UNSPECIFIED\x10\x00\x12\x16\n" +
-	"\x12ENTITY_TYPE_PERSON\x10\x01\x12\x1c\n" +
+	"\x17ENTITY_TYPE_UNSPECIFIED\x10\x00\x12\x15\n" +
+	"\x11ENTITY_TYPE_BEING\x10\x01\x12\x1c\n" +
 	"\x18ENTITY_TYPE_ORGANIZATION\x10\x02\x12\x18\n" +
 	"\x14ENTITY_TYPE_LOCATION\x10\x03\x12\x15\n" +
 	"\x11ENTITY_TYPE_EVENT\x10\x04\x12\x18\n" +
@@ -622,7 +603,7 @@ var file_schema_v1_entity_proto_goTypes = []any{
 	(Entity_Label_LabelType)(0),        // 1: schema.v1.Entity.Label.LabelType
 	(*Entity)(nil),                     // 2: schema.v1.Entity
 	(*Entity_Label)(nil),               // 3: schema.v1.Entity.Label
-	(*Entity_PersonDetails)(nil),       // 4: schema.v1.Entity.PersonDetails
+	(*Entity_BeingDetails)(nil),        // 4: schema.v1.Entity.BeingDetails
 	(*Entity_OrganizationDetails)(nil), // 5: schema.v1.Entity.OrganizationDetails
 	(*Entity_LocationDetails)(nil),     // 6: schema.v1.Entity.LocationDetails
 	(*Entity_EventDetails)(nil),        // 7: schema.v1.Entity.EventDetails
@@ -633,12 +614,12 @@ var file_schema_v1_entity_proto_depIdxs = []int32{
 	3,  // 0: schema.v1.Entity.labels:type_name -> schema.v1.Entity.Label
 	0,  // 1: schema.v1.Entity.type:type_name -> schema.v1.EntityType
 	8,  // 2: schema.v1.Entity.tags:type_name -> schema.v1.Tag
-	4,  // 3: schema.v1.Entity.person:type_name -> schema.v1.Entity.PersonDetails
+	4,  // 3: schema.v1.Entity.being:type_name -> schema.v1.Entity.BeingDetails
 	5,  // 4: schema.v1.Entity.organization:type_name -> schema.v1.Entity.OrganizationDetails
 	6,  // 5: schema.v1.Entity.location:type_name -> schema.v1.Entity.LocationDetails
 	7,  // 6: schema.v1.Entity.event:type_name -> schema.v1.Entity.EventDetails
 	1,  // 7: schema.v1.Entity.Label.type:type_name -> schema.v1.Entity.Label.LabelType
-	9,  // 8: schema.v1.Entity.PersonDetails.birth_date:type_name -> google.protobuf.Timestamp
+	9,  // 8: schema.v1.Entity.BeingDetails.birth_date:type_name -> google.protobuf.Timestamp
 	9,  // 9: schema.v1.Entity.OrganizationDetails.created:type_name -> google.protobuf.Timestamp
 	10, // [10:10] is the sub-list for method output_type
 	10, // [10:10] is the sub-list for method input_type
@@ -654,7 +635,7 @@ func file_schema_v1_entity_proto_init() {
 	}
 	file_schema_v1_tag_proto_init()
 	file_schema_v1_entity_proto_msgTypes[0].OneofWrappers = []any{
-		(*Entity_Person)(nil),
+		(*Entity_Being)(nil),
 		(*Entity_Organization)(nil),
 		(*Entity_Location)(nil),
 		(*Entity_Event)(nil),
