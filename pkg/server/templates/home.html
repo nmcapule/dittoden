@@ -4,32 +4,79 @@
 	<title>Dittoden - Entities</title>
 	<style>
 		body { font-family: sans-serif; margin: 20px; }
-		table { border-collapse: collapse; width: 100%; }
+		.controls { margin-bottom: 20px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; }
+		.filter-group { margin-bottom: 10px; }
+		.filter-btn { margin-right: 5px; padding: 5px 10px; cursor: pointer; border: 1px solid #ccc; background: #fff; text-decoration: none; color: #333; display: inline-block; }
+		.filter-btn.active { background: #007bff; color: white; border-color: #007bff; }
+		table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
 		th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
 		th { background-color: #f2f2f2; }
 		tr:hover { background-color: #f5f5f5; cursor: pointer; }
+		.pagination { display: flex; gap: 5px; align-items: center; }
+		.page-link { padding: 5px 10px; border: 1px solid #ddd; text-decoration: none; color: #333; }
+		.page-link.active { background: #007bff; color: white; border-color: #007bff; }
+		.search-box { padding: 5px; width: 300px; }
 	</style>
 </head>
 <body>
 	<h1>Entities</h1>
+
+	<div class="controls">
+		<form method="GET" action="/">
+			<div class="filter-group">
+				<input type="text" name="q" class="search-box" placeholder="Search by name, property..." value="{{.SearchQuery}}">
+				<button type="submit">Search</button>
+				<input type="hidden" name="limit" value="{{.Limit}}">
+				<input type="hidden" name="type" value="{{.TypeFilter}}">
+			</div>
+		</form>
+
+		<div class="filter-group">
+			<strong>Filter by Type:</strong>
+			<a href="/?q={{.SearchQuery}}&limit={{.Limit}}" class="filter-btn {{if eq .TypeFilter ""}}active{{end}}">All</a>
+			{{range .Types}}
+			<a href="/?q={{$.SearchQuery}}&limit={{$.Limit}}&type={{.}}" class="filter-btn {{if eq $.TypeFilter .}}active{{end}}">{{.}}</a>
+			{{end}}
+		</div>
+
+		<div class="filter-group">
+			<strong>Items per page:</strong>
+			<a href="/?q={{.SearchQuery}}&type={{.TypeFilter}}&limit=10" class="filter-btn {{if eq .Limit 10}}active{{end}}">10</a>
+			<a href="/?q={{.SearchQuery}}&type={{.TypeFilter}}&limit=50" class="filter-btn {{if eq .Limit 50}}active{{end}}">50</a>
+			<a href="/?q={{.SearchQuery}}&type={{.TypeFilter}}&limit=100" class="filter-btn {{if eq .Limit 100}}active{{end}}">100</a>
+		</div>
+	</div>
+
 	<table>
 		<thead>
 			<tr>
 				<th>Code</th>
 				<th>Primary Label</th>
 				<th>Type</th>
+				<th>Importance</th>
 			</tr>
 		</thead>
 		<tbody>
-			{{range .}}
-			<tr onclick="window.location='/entity/{{.Code}}'">
-				<td>{{.Code}}</td>
-				<td>{{getPrimaryLabel .}}</td>
-				<td>{{.Type}}</td>
+			{{range .Entities}}
+			<tr onclick="window.location='/entity/{{.Entity.Code}}'">
+				<td>{{.Entity.Code}}</td>
+				<td>{{getPrimaryLabel .Entity}}</td>
+				<td>{{.Entity.Type}}</td>
+				<td>{{.Importance}}</td>
 			</tr>
 			{{end}}
 		</tbody>
 	</table>
+
+	<div class="pagination">
+		{{if gt .TotalPages 1}}
+			{{range $i := seq .TotalPages}}
+			<a href="/?q={{$.SearchQuery}}&type={{$.TypeFilter}}&limit={{$.Limit}}&page={{$i}}" class="page-link {{if eq $.Page $i}}active{{end}}">{{$i}}</a>
+			{{end}}
+		{{end}}
+		<span>Total: {{.Total}} entities</span>
+	</div>
+
 	<script>
 		// Helper for template function in JS context if needed, though handled in Go
 	</script>

@@ -9,6 +9,9 @@ import (
 	"net/http"
 	"sort"
 
+	"strconv"
+	"strings"
+
 	schema "github.com/nmcapule/dittoden/gen/schema/v1"
 	"github.com/nmcapule/dittoden/pkg/registry"
 )
@@ -33,26 +36,144 @@ func (s *Server) Start() error {
 	return http.ListenAndServe(addr, mux)
 }
 
+type EntityDisplay struct {
+	Entity     *schema.Entity
+	Importance int
+}
+
 func (s *Server) handleHome(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
 	}
 
-	var entities []*schema.Entity
-	for _, e := range s.Registry.Entities {
-		entities = append(entities, e)
+	// Parse query parameters
+	query := r.URL.Query()
+	searchQ := strings.ToLower(query.Get("q"))
+	typeFilter := query.Get("type")
+	pageStr := query.Get("page")
+	limitStr := query.Get("limit")
+
+	page, _ := strconv.Atoi(pageStr)
+	if page < 1 {
+		page = 1
+	}
+	limit, _ := strconv.Atoi(limitStr)
+	if limit != 10 && limit != 50 && limit != 100 {
+		limit = 10
 	}
 
-	// Sort by code for consistent display
+	// Calculate importance
+	importance := make(map[string]int)
+	for _, rel := range s.Registry.Relationships {
+		importance[rel.A.Code]++
+		importance[rel.Z.Code]++
+	}
+
+	var entities []EntityDisplay
+	for _, e := range s.Registry.Entities {
+		// Filter by Type
+		if typeFilter != "" && e.Type.String() != typeFilter {
+			continue
+		}
+
+		// Filter by Search Query
+		if searchQ != "" {
+			match := false
+			if strings.Contains(strings.ToLower(e.Code), searchQ) {
+				match = true
+			}
+			if !match {
+				for _, l := range e.Labels {
+					if strings.Contains(strings.ToLower(l.Label), searchQ) {
+						match = true
+						break
+					}
+				}
+			}
+			if !match {
+				for _, t := range e.Tags {
+					if strings.Contains(strings.ToLower(t.Name), searchQ) || strings.Contains(strings.ToLower(t.Value), searchQ) {
+						match = true
+						break
+					}
+				}
+			}
+			if !match {
+				continue
+			}
+		}
+
+		entities = append(entities, EntityDisplay{
+			Entity:     e,
+			Importance: importance[e.Code],
+		})
+	}
+
+	// Sort by Importance (descending), then Code
 	sort.Slice(entities, func(i, j int) bool {
-		return entities[i].Code < entities[j].Code
+		if entities[i].Importance != entities[j].Importance {
+			return entities[i].Importance > entities[j].Importance
+		}
+		return entities[i].Entity.Code < entities[j].Entity.Code
 	})
+
+	// Pagination
+	total := len(entities)
+	start := (page - 1) * limit
+	end := start + limit
+	if start > total {
+		start = total
+	}
+	if end > total {
+		end = total
+	}
+	pagedEntities := entities[start:end]
+
+	// Collect all unique types for filter buttons
+	allTypes := make(map[string]bool)
+	for _, e := range s.Registry.Entities {
+		allTypes[e.Type.String()] = true
+	}
+	var typeList []string
+	for t := range allTypes {
+		typeList = append(typeList, t)
+	}
+	sort.Strings(typeList)
+
+	data := struct {
+		Entities    []EntityDisplay
+		SearchQuery string
+		TypeFilter  string
+		Page        int
+		Limit       int
+		Total       int
+		TotalPages  int
+		Types       []string
+	}{
+		Entities:    pagedEntities,
+		SearchQuery: searchQ,
+		TypeFilter:  typeFilter,
+		Page:        page,
+		Limit:       limit,
+		Total:       total,
+		TotalPages:  (total + limit - 1) / limit,
+		Types:       typeList,
+	}
 
 	tmpl := template.Must(template.New("home.html").Funcs(template.FuncMap{
 		"getPrimaryLabel": getPrimaryLabel,
+		"add":             func(a, b int) int { return a + b },
+		"sub":             func(a, b int) int { return a - b },
+		"seq": func(n int) []int {
+			s := make([]int, n)
+			for i := range s {
+				s[i] = i + 1
+			}
+			return s
+		},
 	}).ParseFS(templatesFS, "templates/home.html"))
-	if err := tmpl.Execute(w, entities); err != nil {
+	if err := tmpl.Execute(w, data); err != nil {
 		s.Logger.Error("Failed to execute template", slog.Any("error", err))
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
